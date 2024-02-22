@@ -19,13 +19,13 @@ Route::get('/', function () {
 });
 Route::get('/dashboard', function () {
     $genres = \App\Models\Genre::all();
-    return view('admin.dashboard',compact('genres'));
+    return view('admin.dashboard', compact('genres'));
 });
 
 Route::resource('/genre', \App\Http\Controllers\GenreController::class);
 
 
-Route::get('/dashboard', function () {
+Route::get('/gg', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
@@ -35,4 +35,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
