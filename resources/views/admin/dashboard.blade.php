@@ -185,27 +185,30 @@
                                                         </div>
                                                         <!-- Modal body -->
                                                         <div class="p-4 md:p-5 space-y-4">
-                                                            <form action="{{route('genre.store')}}"  method="post">
+                                                            <x-form action="{{route('genre.store')}}" has-files>
                                                                 @csrf
 
                                                                 <div id="specialties" class="mt-4 ">
-                                                                    <label for="">name</label>
-                                                                    <input type="text" name="name" id="">
+                                                                    <label for="name" class="text-white">name</label>
+                                                                    <input type="text" name="name" id="name">
                                                                 </div>
                                                                 <div id="specialties" class="mt-4 ">
-                                                                    <label for="">name</label>
-                                                                    <input type="text" name="description" id="">
+                                                                    <label for="description" class="text-white">Description</label>
+                                                                    <input type="text" name="description" id="description">
+                                                                </div>
+                                                                <div>
+                                                                    <x-label for="Genre" :value="__('Image Genre')" />
+                                                                    <x-input name="image" id="image" type="file" class="p-4" :value="old('image')" required autofocus autocomplete="image"/>
+                                                                    <x-error field="iamge" class="text-red-500" :messages="$errors->get('image')" />
+
                                                                 </div>
                                                                 <div class=" pt-4 border-t border-gray-200 rounded-b dark:border-gray-600">
                                                                     <button data-modal-hide="default-modal" type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add</button>
                                                                 </div>
 
-                                                            </form>
+                                                            </x-form>
 
-                                                        </div>
-                                                        <!-- Modal footer -->
-                                                        <div class="flex items-center p-2  border-t border-gray-200 rounded-b dark:border-gray-600">
-                                                            <button data-modal-hide="default-modal" type="button" class="ms-3 text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Decline</button>
+
                                                         </div>
                                                     </div>
                                                 </div>
@@ -235,7 +238,8 @@
                                             <td class="p-3 pl-0">
                                                 <div class="flex items-center">
                                                     <div class="relative inline-block shrink-0 rounded-2xl me-3">
-                                                        <img src="https://raw.githubusercontent.com/Loopple/loopple-public-assets/main/riva-dashboard-tailwind/img/img-49-new.jpg" class="w-[50px] h-[50px] inline-block shrink-0 rounded-2xl" alt="">
+                                                        <img src="{{ asset('storage/'.$genre->image->path)}}" class="w-[50px] h-[50px] inline-block shrink-0 rounded-2xl" alt="genre image">
+
                                                     </div>
                                                     <div class="flex flex-col justify-start">
                                                         {{$genre->id}}

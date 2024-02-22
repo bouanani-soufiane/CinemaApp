@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\trait\ImageUpload;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 

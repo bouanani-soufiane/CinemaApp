@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\GenreRequest;
-use App\ImageUpload;
 use App\Models\Genre;
+use App\trait\ImageUpload;
 use Illuminate\Http\Request;
 
 class GenreController extends Controller
@@ -32,7 +32,7 @@ class GenreController extends Controller
     public function store(GenreRequest $request)
     {
         $genre = Genre::create($request->validated());
-
+        $this->storeImg($genre, $request->file('image'));
         return redirect()->back();
     }
 

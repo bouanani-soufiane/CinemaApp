@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Film;
+use App\trait\ImageUpload;
 use Illuminate\Http\Request;
 
 class FilmController extends Controller
