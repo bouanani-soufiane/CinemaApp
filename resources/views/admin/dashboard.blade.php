@@ -194,16 +194,15 @@
                                                                 </div>
                                                                 <div id="specialties" class="mt-4 ">
                                                                     <label for="description" class="text-white">Description</label>
-                                                                    <input type="text" name="description" id="description">
+                                                                    <input type="text" name="description" id="description" class="w-full">
                                                                 </div>
                                                                 <div>
-                                                                    <x-label for="Genre" :value="__('Image Genre')" />
-                                                                    <x-input name="image" id="image" type="file" class="p-4" :value="old('image')" required autofocus autocomplete="image"/>
+                                                                    <x-input name="image" id="image" type="file" class="p-4c w-full" :value="old('image')" required autofocus autocomplete="image"/>
                                                                     <x-error field="iamge" class="text-red-500" :messages="$errors->get('image')" />
 
                                                                 </div>
                                                                 <div class=" pt-4 border-t border-gray-200 rounded-b dark:border-gray-600">
-                                                                    <button data-modal-hide="default-modal" type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add</button>
+                                                                    <button data-modal-hide="default-modal" type="submit" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add</button>
                                                                 </div>
 
                                                             </x-form>
