@@ -1,5 +1,5 @@
 <?php
-namespace App;
+namespace App\trait;
 use App\Models\Image;
 
 trait ImageUpload

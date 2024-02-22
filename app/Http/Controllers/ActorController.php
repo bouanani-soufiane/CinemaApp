@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Actor;
+use App\trait\ImageUpload;
 use Illuminate\Http\Request;
 
 class ActorController extends Controller
