@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\GenreRequest;
+use App\ImageUpload;
 use App\Models\Genre;
 use Illuminate\Http\Request;
 
@@ -13,7 +15,7 @@ class GenreController extends Controller
      */
     public function index()
     {
-        //
+        return "test";
     }
 
     /**
@@ -27,9 +29,11 @@ class GenreController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(GenreRequest $request)
     {
-        //
+        $genre = Genre::create($request->validated());
+
+        return redirect()->back();
     }
 
     /**
