@@ -33,7 +33,6 @@ class GenreController extends Controller
     {
         $genre = Genre::create($request->validated());
 
-        dd($request->validated());
         $this->storeImg($genre, $request->file('image'));
         return redirect()->back();
     }
@@ -59,9 +58,6 @@ class GenreController extends Controller
      */
     public function update(GenreRequest $request, Genre $genre)
     {
-//        $genres = Genre::findOrFail($request->validated()['slug']);
-
-//        dd($request->file());
 
         $genre->update($request->validated());
         $this->updateImg($genre, $request->file('image'));

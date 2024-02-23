@@ -21,10 +21,13 @@ return new class extends Migration
         Schema::create('films', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('description');
-            $table->double('duration', 8, 2);
-            $table->foreignId('genre_id')->constrained('genres')->cascadeOnDelete()->cascadeOnUpdate();
-            $table->foreignId('room_id')->constrained('rooms')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->string('plot');
+            $table->string('imdbRating');
+            $table->string('release_date');
+            $table->string('director');
+            $table->string('duration');
+            $table->foreignId('genre_id')->nullable()->constrained('genres')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('room_id')->nullable()->constrained('rooms')->cascadeOnDelete()->cascadeOnUpdate();
 
             $table->timestamps();
         });
