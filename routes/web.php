@@ -44,3 +44,5 @@ Route::resource('/room', \App\Http\Controllers\RoomController::class);
 Route::resource('/seat', \App\Http\Controllers\SeatController::class);
 Route::resource('/ticket', \App\Http\Controllers\TicketController::class);
 Route::resource('/zone', \App\Http\Controllers\ZoneController::class);
+
+Route::get('/fetch', [\App\Http\Controllers\FetchFilmController::class, 'fetchApiMovie']);
