@@ -36,3 +36,11 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__ . '/auth.php';
+Route::resource('/actor', \App\Http\Controllers\ActorController::class);
+Route::resource('/film', \App\Http\Controllers\FilmController::class);
+Route::resource('/notification', \App\Http\Controllers\NotificationController::class);
+Route::resource('/reservation', \App\Http\Controllers\ReservationController::class);
+Route::resource('/room', \App\Http\Controllers\RoomController::class);
+Route::resource('/seat', \App\Http\Controllers\SeatController::class);
+Route::resource('/ticket', \App\Http\Controllers\TicketController::class);
+Route::resource('/zone', \App\Http\Controllers\ZoneController::class);

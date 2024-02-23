@@ -260,11 +260,11 @@
 
 
                                                 <div class="">
-                                                    <button  data-medicines-name="{{$genre->name}}"  data-medicines-id="{{$genre->id}}"  data-modal-target="edit-modal-medicine" data-modal-toggle="edit-modal-medicine" class=" bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full" type="button">
+                                                    <button  data-genre-name="{{$genre->name}}"  data-genre-id="{{$genre->id}}"  data-modal-target="edit-modal-genre" data-modal-toggle="edit-modal-genre" class=" bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full" type="button">
                                                         edit
                                                     </button>
 
-                                                    <div id="edit-modal-medicine" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                                                    <div id="edit-modal-genre" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
                                                         <div class="relative p-4 w-full max-w-2xl max-h-full">
                                                             <!-- Modal content -->
                                                             <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
@@ -282,16 +282,21 @@
                                                                 </div>
                                                                 <!-- Modal body -->
                                                                 <div class="p-4 md:p-5 space-y-4">
-                                                                    <form method="POST" action="{{ route('genre.update', $genre)}}">
+                                                                    <form method="POST" action="{{ route('genre.update', $genre->slug)}}" enctype="multipart/form-data">
                                                                         @csrf
                                                                         @method('PATCH')
                                                                         <div>
+                                                                            <input type="hidden" id="genreId" value="{{ $genre->id }}" name="id">
                                                                             <label for="">name</label>
-                                                                            <input type="text" name="name" id="">
+                                                                            <input type="text" name="name" id="namegenre">
                                                                         </div>
-                                                                        <div id="specialties" class="mt-4 ">
+                                                                        <div id="" class="mt-4 ">
                                                                             <label for="">description</label>
                                                                             <input type="text" name="description" id="">
+                                                                        </div>
+                                                                        <div>
+                                                                            <x-input name="image" id="image" type="file" class="p-4c w-full" :value="old('image')" required autofocus autocomplete="image"/>
+                                                                            <x-error field="iamge" class="text-red-500" :messages="$errors->get('image')" />
                                                                         </div>
                                                                         <div class=" pt-4 border-t border-gray-200 rounded-b dark:border-gray-600">
                                                                             <button data-modal-hide="default-modal" type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">update</button>
@@ -307,7 +312,9 @@
                                                     </div>
                                                 </div>
                                                 <form method="POST" action="{{ route('genre.update', $genre)}}">
-                                                    <button data-modal-hide="default-modal" type="button" class="ms-3 ">delete</button>
+                                                    @method('DELETE')
+                                                    @csrf
+                                                    <button type="submit" class="mt-4  bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full">delete</button>
                                                 </form>
                                             </td>
                                         </tr>
@@ -324,6 +331,25 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const modalgenreButtons = document.querySelectorAll('[data-modal-toggle="edit-modal-genre"]');
+        const modalmedicine = document.getElementById("edit-modal-genre");
+        const genreId = modalmedicine.querySelector('#genreId');
+        const namegenre = modalmedicine.querySelector('#namegenre');
+
+        modalgenreButtons.forEach((button) => {
+            button.addEventListener("click", function () {
+                const genreValue = this.getAttribute("data-genre-id");
+                const genreName = this.getAttribute("data-genre-name");
+
+                genreId.value = genreValue;
+                namegenre.value = genreName;
+            });
+        });
+    });
+</script>
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>

@@ -32,6 +32,8 @@ class GenreController extends Controller
     public function store(GenreRequest $request)
     {
         $genre = Genre::create($request->validated());
+
+        dd($request->validated());
         $this->storeImg($genre, $request->file('image'));
         return redirect()->back();
     }
@@ -55,9 +57,15 @@ class GenreController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Genre $genre)
+    public function update(GenreRequest $request, Genre $genre)
     {
-        //
+//        $genres = Genre::findOrFail($request->validated()['slug']);
+
+//        dd($request->file());
+
+        $genre->update($request->validated());
+        $this->updateImg($genre, $request->file('image'));
+        return redirect()->back();
     }
 
     /**
@@ -65,6 +73,7 @@ class GenreController extends Controller
      */
     public function destroy(Genre $genre)
     {
-        //
+        $genre->delete();
+        return redirect()->back();
     }
 }
