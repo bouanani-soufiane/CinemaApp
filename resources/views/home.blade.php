@@ -6,7 +6,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="https://cdn.tailwindcss.com"></script>
-    <title>Ciné Cool</title>
+    <title>Home Page</title>
 </head>
 <body>
 
@@ -50,20 +50,19 @@
 
         <div class="container mx-auto px-6 py-16 text-center">
             <div class="mx-auto max-w-lg">
-                <h1 class="text-3xl font-bold text-gray-800 dark:text-white lg:text-4xl">Silver Screens: Your Gateway to Cinematic Adventures</h1>
+                <h1 class="text-3xl font-bold text-gray-800 dark:text-white lg:text-4xl">Building Your Next App with our Awesome components</h1>
                 <p class="mt-6 text-gray-500 dark:text-gray-300">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Libero similique obcaecati illum mollitia.</p>
-                <button class="mt-6 rounded-lg bg-blue-600 px-6 py-2.5 text-center text-sm font-medium capitalize leading-5 text-white hover:bg-blue-500 focus:outline-none lg:mx-0 lg:w-auto">Get your ticket now</button>
-                <p class="mt-3 text-sm text-gray-400">book your ticket</p>
+                <button class="mt-6 rounded-lg bg-blue-600 px-6 py-2.5 text-center text-sm font-medium capitalize leading-5 text-white hover:bg-blue-500 focus:outline-none lg:mx-0 lg:w-auto">Start 14-Day free trial</button>
+                <p class="mt-3 text-sm text-gray-400">No credit card required</p>
             </div>
 
             <div class="mt-10 flex justify-center">
-                <img class="h-96 w-full rounded-xl object-cover lg:w-4/5" src="{{asset('images/1.jpg')}}" />
+                <img class="h-96 w-full rounded-xl object-cover lg:w-4/5" src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1632&q=80" />
             </div>
         </div>
     </section>
 
     <section class="bg-white dark:bg-gray-900">
-        
         <div class="container mx-auto px-6 py-10">
             <h1 class="text-center text-3xl font-semibold capitalize text-gray-800 dark:text-white lg:text-4xl">Portfolio</h1>
 
