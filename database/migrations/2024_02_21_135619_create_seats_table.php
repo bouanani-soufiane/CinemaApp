@@ -20,9 +20,8 @@ return new class extends Migration
         schema::disableForeignKeyConstraints();
         Schema::create('seats', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('genre_id')->constrained('genres')->cascadeOnDelete()->cascadeOnUpdate();
-            $table->foreignId('room_id')->constrained('rooms')->cascadeOnDelete()->cascadeOnUpdate();
-            $table->foreignId('zone_id')->constrained('zones')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('room_id')->nullable()->constrained('rooms')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('zone_id')->nullable()->constrained('zones')->cascadeOnDelete()->cascadeOnUpdate();
 
             $table->timestamps();
         });

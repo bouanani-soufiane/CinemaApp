@@ -9,9 +9,9 @@
     <link href="style/style.css" rel="stylesheet">
     <meta name="author" content="Mazyar">
     <title>Movie Management Dashboard</title>
-    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
 
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
 </head>
 

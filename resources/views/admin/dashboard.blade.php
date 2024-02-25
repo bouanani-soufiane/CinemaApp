@@ -7,8 +7,12 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet" />
-
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/@material-tailwind/html@latest/styles/material-tailwind.css"
+    />
     <title>Home Page</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body>
 <script src="//unpkg.com/alpinejs" defer></script>
@@ -328,31 +332,174 @@
                 </div>
 
             </div>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+                <div class="lg:col-span-1 bg-white p-6 relative flex flex-col min-w-0 mb-4 lg:mb-0 break-words w-full shadow-lg rounded">
+                    <!-- Left content -->
+                    <div class="rounded-t mb-0 px-0 border-0">
+                        <table class="w-full my-0 align-middle text-dark border-neutral-200">
+                            <thead class="align-bottom">
+                            <tr class="font-semibold text-[0.95rem] text-secondary-dark">
+                                <th class="pb-3 text-start min-w-[175px]">Room</th>
+                                <th class="pb-3 text-end min-w-[100px]">Total Seats</th>
+                                <th class="pb-3 text-end min-w-[100px]">Total Zones</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($rooms as $room)
+                                <tr class="border-b border-dashed last:border-b-0">
+                                    <td class="p-3 pl-0">
+                                        <div class="flex items-center">
+
+                                            <div class="flex flex-col justify-start">
+                                                <p class="mb-1 font-semibold transition-colors duration-200 ease-in-out text-lg/normal text-secondary-inverse hover:text-primary"> {{$room->name}} </p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="p-3 pr-0 text-end">
+                                        <span class="font-semibold text-light-inverse text-md/normal">300 seats</span>
+                                    </td>
+                                    <td class="p-3 pr-0 text-end">
+                                        <span class="font-semibold text-light-inverse text-md/normal">3 zones</span>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="lg:col-span-2 bg-white border border-gray-100 shadow-md shadow-black/5 p-6 rounded-md ">
+                    <div class="flex max-w-md bg-blend-darken shadow-lg rounded-lg overflow-hidden bg-red-600 hidden" id="message">
+                        <div class="w-2 bg-gray-800"></div>
+                        <div class="flex items-center px-2 py-3 bg-red-600">
+                            <div class="mx-3">
+                                <p class="text-white" id="messagetext"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="font-medium">Adjust schema</div>
+                    <form action="{{route('genre.store')}}" method="post">
+                        @csrf
+                        <div class="mt-4 ">
+                            <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-800">Select a room</label>
+                            <select class=" w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="room_id">
+                                @foreach($rooms as $room)
+                                <option value="{{$room->id}}" class="w-full">
+                                    {{$room->name}}
+                                </option>
+                                @endforeach
+                            </select>
+
+                        </div>
+
+                        <div class="mt-4 ">
+                            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-800">Select zone </label>
+                            <select class=" w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="room_id" multiple id="zone-select" >
+                                @foreach($zone as $zone)
+                                    <option value="{{$zone->id}}" class="w-full">
+                                        {{$zone->name}}
+                                    </option>
+                                @endforeach
+                            </select>
+                            <div class="mt-4" id="ZoneArea ">
+
+                            </div>
+                            <label>Or </label>
+                            <button
+                                type="button"
+                                data-ripple-light="true"
+                                data-popover-target="popover-animation"
+                                class="m-3 middle none center rounded-lg bg-gradient-to-tr from-pink-600 to-pink-400 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                            >
+                                Add Zone
+                            </button>
+
+                        </div>
+
+                        <div class=" pt-4 border-t border-gray-200 rounded-b dark:border-gray-600">
+                            <button  type="submit" class="w-full bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none">Add</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div
+                data-popover="popover-animation"
+                data-popover-mount="opacity-100 scale-100"
+                data-popover-unmount="opacity-0 scale-0 pointer-events-none"
+                data-popover-transition="transition-all duration-200 origin-bottom"
+                class="absolute w-[500px] whitespace-normal break-words rounded-lg border border-blue-gray-50 bg-white p-4 font-sans text-sm font-normal text-blue-gray-500 shadow-lg shadow-blue-gray-500/10 focus:outline-none"
+
+            >
+                <h1>add zone </h1>
+                <form action="{{ url('zoneAjax') }}" method="POST" enctype="multipart/form-data" id="add">
+                    @csrf
+                    <div class="p-4 bg-gray-100 m-3"><div>
+                            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-800">name zone </label>
+                            <input type="text" name="name" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-800">tariff </label>
+                            <input type="number" name="tariff" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-800">total seats </label>
+                            <input type="number" name="nbr_seats" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        </div></div>
+                    <button type="submit" class="w-full bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none">Add</button>
+
+                </form>
+            </div>
+
         </div>
     </div>
 </div>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const modalgenreButtons = document.querySelectorAll('[data-modal-toggle="edit-modal-genre"]');
-        const modalmedicine = document.getElementById("edit-modal-genre");
-        const genreId = modalmedicine.querySelector('#genreId');
-        const namegenre = modalmedicine.querySelector('#namegenre');
+    $(document).ready(function(){
 
-        modalgenreButtons.forEach((button) => {
-            button.addEventListener("click", function () {
-                const genreValue = this.getAttribute("data-genre-id");
-                const genreName = this.getAttribute("data-genre-name");
-
-                genreId.value = genreValue;
-                namegenre.value = genreName;
+        $('#add').on('submit', function(event){
+            event.preventDefault();
+            jQuery.ajax({
+                url: "{{ url('zoneAjax') }}",
+                data: jQuery('#add').serialize(),
+                type: 'post',
+                success:function(response)
+                {
+                    $('#message').css('display','block');
+                    jQuery('#messagetext').html(response.message);
+                    jQuery('#add')[0].reset();
+                    $('#zone-select').append($('<option>', {
+                        value: response.zone.id,
+                        text: response.zone.name
+                    }));
+                    setTimeout(function() {
+                        $('#message').css('display', 'none');
+                    }, 3000);
+                }
+            });
+        });
+        document.addEventListener("DOMContentLoaded", function () {
+            const modalgenreButtons = document.querySelectorAll('[data-modal-toggle="edit-modal-genre"]');
+            const modalmedicine = document.getElementById("edit-modal-genre");
+            const genreId = modalmedicine.querySelector('#genreId');
+            const namegenre = modalmedicine.querySelector('#namegenre');
+            modalgenreButtons.forEach((button) => {
+                button.addEventListener("click", function () {
+                    const genreValue = this.getAttribute("data-genre-id");
+                    const genreName = this.getAttribute("data-genre-name");
+                    genreId.value = genreValue;
+                    namegenre.value = genreName;
+                });
             });
         });
     });
 </script>
-
+<script
+    type="module"
+    src="https://unpkg.com/@material-tailwind/html@latest/scripts/popover.js"
+></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
 </body>
 </html>

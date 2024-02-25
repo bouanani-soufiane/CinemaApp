@@ -27,7 +27,6 @@ return new class extends Migration
             $table->string('director');
             $table->string('duration');
             $table->foreignId('genre_id')->nullable()->constrained('genres')->cascadeOnDelete()->cascadeOnUpdate();
-            $table->foreignId('room_id')->nullable()->constrained('rooms')->cascadeOnDelete()->cascadeOnUpdate();
 
             $table->timestamps();
         });

@@ -8,6 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Zone extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'name',
+        'tariff',
+        'nbr_seats'
+    ];
     public function seat()
     {
         return $this->hasMany(Seat::class);

@@ -19,7 +19,9 @@ Route::get('/', function () {
 });
 Route::get('/dashboard', function () {
     $genres = \App\Models\Genre::all();
-    return view('admin.dashboard', compact('genres'));
+    $rooms = \App\Models\Room::all();
+    $zone = \App\Models\Zone::all();
+    return view('admin.dashboard', compact('genres','rooms','zone'));
 });
 
 Route::resource('/genre', \App\Http\Controllers\GenreController::class);
@@ -46,3 +48,4 @@ Route::resource('/ticket', \App\Http\Controllers\TicketController::class);
 Route::resource('/zone', \App\Http\Controllers\ZoneController::class);
 
 Route::get('/fetch', [\App\Http\Controllers\FetchFilmController::class, 'fetchApiMovie']);
+Route::post('/zoneAjax', [\App\Http\Controllers\ZoneController::class, 'storeAjax']);
