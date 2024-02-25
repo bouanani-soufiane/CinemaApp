@@ -39,9 +39,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/auth/{provider}/redirect', [poviderController::class, 'redirect']);
+Route::get('/auth/{provider}/redirect', [PoviderController::class, 'redirect'])->name('auth.provider.redirect');
+Route::get('/auth/{provider}/callback', [PoviderController::class, 'callback'])->name('auth.provider.callback');
 
-Route::get('/auth/{provider}/callback', [poviderController::class, 'callback']);
 
 
 
