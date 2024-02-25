@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Seat extends Model
 {
     use HasFactory;
+    protected $fillable = ['room_id' , 'zone_id'];
     public function reservation()
     {
         return $this->hasOne(Reservation::class);

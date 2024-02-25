@@ -211,7 +211,6 @@
 
                                                             </x-form>
 
-
                                                         </div>
                                                     </div>
                                                 </div>
@@ -332,39 +331,63 @@
                 </div>
 
             </div>
+            <h1 class="text-5xl font-bold text-center text-red-700 mb-6" style="font-size: 60px; margin: 20px;">Manage Rooms</h1>
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+
+
                 <div class="lg:col-span-1 bg-white p-6 relative flex flex-col min-w-0 mb-4 lg:mb-0 break-words w-full shadow-lg rounded">
                     <!-- Left content -->
                     <div class="rounded-t mb-0 px-0 border-0">
-                        <table class="w-full my-0 align-middle text-dark border-neutral-200">
-                            <thead class="align-bottom">
-                            <tr class="font-semibold text-[0.95rem] text-secondary-dark">
-                                <th class="pb-3 text-start min-w-[175px]">Room</th>
-                                <th class="pb-3 text-end min-w-[100px]">Total Seats</th>
-                                <th class="pb-3 text-end min-w-[100px]">Total Zones</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach($rooms as $room)
-                                <tr class="border-b border-dashed last:border-b-0">
-                                    <td class="p-3 pl-0">
-                                        <div class="flex items-center">
+                        <div class="">
+                            <h1 class="text-3xl font-bold text-center text-blue-700 mb-6">Create New Room</h1>
+                            @if(session('successRoom'))
+                                <div id="successMessage" class="bg-green-200 text-green-800 p-2 mb-4 rounded">
+                                    {{ session('successRoom') }}
+                                </div>
+                            @endif
 
-                                            <div class="flex flex-col justify-start">
-                                                <p class="mb-1 font-semibold transition-colors duration-200 ease-in-out text-lg/normal text-secondary-inverse hover:text-primary"> {{$room->name}} </p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="p-3 pr-0 text-end">
-                                        <span class="font-semibold text-light-inverse text-md/normal">300 seats</span>
-                                    </td>
-                                    <td class="p-3 pr-0 text-end">
-                                        <span class="font-semibold text-light-inverse text-md/normal">3 zones</span>
-                                    </td>
+                            @if(session('errorRoom'))
+                                <div id="errorMessage" class="bg-red-200 text-red-800 p-2 mb-4 rounded">
+                                    {{ session('errorRoom') }}
+                                </div>
+                            @endif
+                            <form action="{{ route('room.store') }}" method="POST" class="w-full">
+                                @csrf
+                                <div class="flex items-center justify-between mb-4">
+                                    <input name="name" id="name" type="text" placeholder="Room Name" class="shadow appearance-none border rounded w-2/5 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mr-2">
+                                    <input name="total_seats" id="total_seats" type="number" placeholder="Total Seats" class="shadow appearance-none border rounded w-2/5 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mr-2">
+                                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Submit</button>
+                                </div>
+                            </form>
+                            <table class="w-full my-0 align-middle text-dark border-neutral-200">
+                                <thead class="align-bottom">
+                                <tr class="font-semibold text-[0.95rem] text-secondary-dark">
+                                    <th class="pb-3 text-start min-w-[175px]">Room</th>
+                                    <th class="pb-3 text-end min-w-[100px]">Total Seats</th>
+                                    <th class="pb-3 text-end min-w-[100px]">Total Zones</th>
                                 </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                @foreach($rooms as $room)
+                                    <tr class="border-b border-dashed last:border-b-0">
+                                        <td class="p-3 pl-0">
+                                            <div class="flex items-center">
+                                                <div class="flex flex-col justify-start">
+                                                    <p class="mb-1 font-semibold transition-colors duration-200 ease-in-out text-lg/normal text-secondary-inverse hover:text-primary"> {{$room->name}} </p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="p-3 pr-0 text-end">
+                                            <span class="font-semibold text-light-inverse text-md/normal">{{$room->total_seats}} seats</span>
+                                        </td>
+                                        <td class="p-3 pr-0 text-end">
+                                            <span class="font-semibold text-light-inverse text-md/normal">3 zones</span>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
                 <div class="lg:col-span-2 bg-white border border-gray-100 shadow-md shadow-black/5 p-6 rounded-md ">
@@ -376,8 +399,20 @@
                             </div>
                         </div>
                     </div>
+                    @if(session('successShema'))
+                        <div id="successMessage" class="bg-green-200 text-green-800 p-2 mb-4 rounded">
+                            {{ session('successShema') }}
+                        </div>
+                    @endif
+
+                    @if(session('errorShema'))
+                        <div id="errorMessage" class="bg-red-200 text-red-800 p-2 mb-4 rounded">
+                            {{ session('errorShema') }}
+                        </div>
+                    @endif
+
                     <div class="font-medium">Adjust schema</div>
-                    <form action="{{route('genre.store')}}" method="post">
+                    <form action="{{route('seat.store')}}" method="post">
                         @csrf
                         <div class="mt-4 ">
                             <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-800">Select a room</label>
@@ -392,14 +427,47 @@
                         </div>
 
                         <div class="mt-4 ">
-                            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-800">Select zone </label>
-                            <select class=" w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="room_id" multiple id="zone-select" >
-                                @foreach($zone as $zone)
-                                    <option value="{{$zone->id}}" class="w-full">
-                                        {{$zone->name}}
-                                    </option>
-                                @endforeach
-                            </select>
+                            <h1 class="block mb-2 text-sm font-bold m-3 text-gray-900 dark:text-gray-800">Select zone </h1>
+                            <div class="block w-full overflow-x-auto">
+                                <table class="items-center w-full border-collapse text-blueGray-700  ">
+                                    <thead class="thead-light ">
+                                    <tr>
+                                        <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                            Name
+                                        </th>
+                                        <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                            Tariff
+                                        </th>
+                                        <th class="px-6 bg-blueGray-50 text-blueGray-700 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left min-w-140-px">
+                                            total seats
+                                        </th>
+                                        <th class="px-6 bg-blueGray-50 text-blueGray-700 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left min-w-140-px">
+                                            add
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="zone-table-body">
+                                    @foreach($zones as $zone)
+                                        <tr id="zone-select">
+                                            <th class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
+                                                {{$zone->name}}
+                                            </th>
+                                            <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
+                                                {{$zone->tariff}}   DH                                          </td>
+                                            <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                                <div class="flex items-center">
+                                                    <span class="mr-2"> {{$zone->nbr_seats}}</span>
+                                                </div>
+                                            </td>
+                                            <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
+                                                    <input type="checkbox" value="{{$zone->id}}" name="zone_id[]">
+                                            </td>
+                                        </tr>
+                                    @endforeach
+
+                                    </tbody>
+                                </table>
+                            </div>
                             <div class="mt-4" id="ZoneArea ">
 
                             </div>
@@ -466,17 +534,22 @@
                 {
                     $('#message').css('display','block');
                     jQuery('#messagetext').html(response.message);
-                    jQuery('#add')[0].reset();
-                    $('#zone-select').append($('<option>', {
-                        value: response.zone.id,
-                        text: response.zone.name
-                    }));
+
+                    var newRow = $('<tr id="zone-select"></tr>');
+                    newRow.append($('<th class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left"></th>').text(response.zone.name));
+                    newRow.append($('<td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 "></td>').text(response.zone.tariff + ' DH'));
+                    newRow.append($('<td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"></td>').text(response.zone.nbr_seats));
+                    newRow.append($('<td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"></td>').html('<input type="checkbox" value="' + response.zone.id + '">'));
+
+                    $('#zone-table-body').append(newRow);
+
                     setTimeout(function() {
                         $('#message').css('display', 'none');
                     }, 3000);
                 }
             });
         });
+
         document.addEventListener("DOMContentLoaded", function () {
             const modalgenreButtons = document.querySelectorAll('[data-modal-toggle="edit-modal-genre"]');
             const modalmedicine = document.getElementById("edit-modal-genre");
@@ -492,6 +565,13 @@
             });
         });
     });
+    setTimeout(function() {
+        document.getElementById('successMessage').style.display = 'none';
+    }, 5000);
+
+    setTimeout(function() {
+        document.getElementById('errorMessage').style.display = 'none';
+    }, 5000);
 </script>
 <script
     type="module"

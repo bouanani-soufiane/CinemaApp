@@ -13,8 +13,8 @@ class Zone extends Model
         'tariff',
         'nbr_seats'
     ];
-    public function seat()
+    public function room()
     {
-        return $this->hasMany(Seat::class);
+        return $this->belongsToMany(Room::class, 'seats');
     }
 }

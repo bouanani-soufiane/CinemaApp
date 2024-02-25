@@ -8,13 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Room extends Model
 {
     use HasFactory;
-
+    protected $fillable = ['name','total_seats'];
     public function film()
     {
         return $this->hasMany(Film::class);
     }
-    public function seat(): HasOne
+    public function zone()
     {
-        return $this->hasMany(Seat::class);
+        return $this->belongsToMany(Zone::class, 'seats');
     }
 }
