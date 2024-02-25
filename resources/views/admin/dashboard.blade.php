@@ -460,7 +460,8 @@
                                                 </div>
                                             </td>
                                             <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
-                                                    <input type="checkbox" value="{{$zone->id}}" name="zone_id[]">
+                                                <input type="checkbox" value="{{$zone->id}}" name="zone_id[]">
+                                                <input type="hidden" value="{{$zone->nbr_seats}}" name="nbrSeats">
                                             </td>
                                         </tr>
                                     @endforeach
@@ -539,7 +540,8 @@
                     newRow.append($('<th class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left"></th>').text(response.zone.name));
                     newRow.append($('<td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 "></td>').text(response.zone.tariff + ' DH'));
                     newRow.append($('<td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"></td>').text(response.zone.nbr_seats));
-                    newRow.append($('<td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"></td>').html('<input type="checkbox" value="' + response.zone.id + '">'));
+                    newRow.append($('<td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"></td>').html('<input type="checkbox" value="' + response.zone.id + '" name="zone_id[]"><input type="hidden" value="' + response.zone.nbr_seats + '" name="nbrSeats">'));
+
 
                     $('#zone-table-body').append(newRow);
 
