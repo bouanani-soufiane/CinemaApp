@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\FilmRequest;
 use App\Models\Film;
 use App\trait\ImageUpload;
 use Illuminate\Http\Request;
@@ -28,9 +29,11 @@ class FilmController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(FilmRequest $request)
     {
-        //
+        dd($request);
+        $film = Film::create($request->validate());
+        
     }
 
     /**
