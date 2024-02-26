@@ -409,7 +409,7 @@
                                                                         <label for="room-date" class="text-white">date</label>
                                                                         <input type="date" name="room-date" id="date" class="w-1/2">
                                                                         <label for="room" class="text-white">{{$room->name}}</label>
-                                                                        <input type="checkbox" name="room" value="{{$room->name}}">
+                                                                        <input type="checkbox" name="room" value="{{$room->id}}">
                                                                         @endforeach
                                                                     
                                                                 </div>

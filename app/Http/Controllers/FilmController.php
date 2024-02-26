@@ -32,12 +32,12 @@ class FilmController extends Controller
      */
     public function store(FilmRequest $request)
     {
-        dd($request->validate());
+        
         $film = Film::create($request->validate());
+        dd($film->room);
         $this->storeImg($film, $request->file('image'));
+        
 
-
-        dd($request->room);
         return redirect()->back();
         
     }

@@ -11,7 +11,7 @@ class Room extends Model
     protected $fillable = ['name','total_seats'];
     public function film()
     {
-        return $this->hasMany(Film::class);
+        return $this->belongsToMany(Film::class);
     }
     public function zone()
     {
