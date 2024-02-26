@@ -32,14 +32,18 @@ class SeatController extends Controller
         try {
             $room_id = $request->input('room_id');
             Seat::where('room_id', $room_id)->delete();
+
             $zone_ids = $request->input('zone_id');
             foreach ($zone_ids as $zone_id) {
-                Seat::create([
-                    'room_id' => $room_id,
-                    'zone_id' => $zone_id,
-                ]);
+                $nbrSeats = $request->input('nbrSeats');
+                for ($i = 0; $i < $nbrSeats; $i++) {
+                    Seat::create([
+                        'room_id' => $room_id,
+                        'zone_id' => $zone_id,
+                    ]);
+                }
             }
-            return redirect()->back()->with('successShema', 'Schema created successfully!');
+        return redirect()->back()->with('successShema', 'Schema created successfully!');
         } catch (\Exception $e) {
             dd($e->getMessage());
             return redirect()->back()->with('errorShema', 'Failed to create schema. Please try again.');

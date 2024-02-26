@@ -15,7 +15,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('home');
+    $genres = \App\Models\Genre::all();
+
+    return view('home',compact('genres'));
 });
 Route::get('/dashboard', function () {
     $genres = \App\Models\Genre::all();
