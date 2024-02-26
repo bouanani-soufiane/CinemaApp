@@ -20,7 +20,7 @@ return new class extends Migration
         Schema::create('zones', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->double('tariff', 8, 2);
+            $table->integer('tariff');
             $table->integer('nbr_seats');
             $table->timestamps();
         });

@@ -7,8 +7,12 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet" />
-
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/@material-tailwind/html@latest/styles/material-tailwind.css"
+    />
     <title>Home Page</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body>
 <script src="//unpkg.com/alpinejs" defer></script>
@@ -207,7 +211,6 @@
 
                                                             </x-form>
 
-
                                                         </div>
                                                     </div>
                                                 </div>
@@ -328,31 +331,257 @@
                 </div>
 
             </div>
+            <h1 class="text-5xl font-bold text-center text-red-700 mb-6" style="font-size: 60px; margin: 20px;">Manage Rooms</h1>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+
+
+                <div class="lg:col-span-1 bg-white p-6 relative flex flex-col min-w-0 mb-4 lg:mb-0 break-words w-full shadow-lg rounded">
+                    <!-- Left content -->
+                    <div class="rounded-t mb-0 px-0 border-0">
+                        <div class="">
+                            <h1 class="text-3xl font-bold text-center text-blue-700 mb-6">Create New Room</h1>
+                            @if(session('successRoom'))
+                                <div id="successMessage" class="bg-green-200 text-green-800 p-2 mb-4 rounded">
+                                    {{ session('successRoom') }}
+                                </div>
+                            @endif
+
+                            @if(session('errorRoom'))
+                                <div id="errorMessage" class="bg-red-200 text-red-800 p-2 mb-4 rounded">
+                                    {{ session('errorRoom') }}
+                                </div>
+                            @endif
+                            <form action="{{ route('room.store') }}" method="POST" class="w-full">
+                                @csrf
+                                <div class="flex items-center justify-between mb-4">
+                                    <input name="name" id="name" type="text" placeholder="Room Name" class="shadow appearance-none border rounded w-2/5 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mr-2">
+                                    <input name="total_seats" id="total_seats" type="number" placeholder="Total Seats" class="shadow appearance-none border rounded w-2/5 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mr-2">
+                                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Submit</button>
+                                </div>
+                            </form>
+                            <table class="w-full my-0 align-middle text-dark border-neutral-200">
+                                <thead class="align-bottom">
+                                <tr class="font-semibold text-[0.95rem] text-secondary-dark">
+                                    <th class="pb-3 text-start min-w-[175px]">Room</th>
+                                    <th class="pb-3 text-end min-w-[100px]">Total Seats</th>
+                                    <th class="pb-3 text-end min-w-[100px]">Total Zones</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($rooms as $room)
+                                    <tr class="border-b border-dashed last:border-b-0">
+                                        <td class="p-3 pl-0">
+                                            <div class="flex items-center">
+                                                <div class="flex flex-col justify-start">
+                                                    <p class="mb-1 font-semibold transition-colors duration-200 ease-in-out text-lg/normal text-secondary-inverse hover:text-primary"> {{$room->name}} </p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="p-3 pr-0 text-end">
+                                            <span class="font-semibold text-light-inverse text-md/normal">{{$room->total_seats}} seats</span>
+                                        </td>
+                                        <td class="p-3 pr-0 text-end">
+                                            <span class="font-semibold text-light-inverse text-md/normal">3 zones</span>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:col-span-2 bg-white border border-gray-100 shadow-md shadow-black/5 p-6 rounded-md ">
+                    <div class="flex max-w-md bg-blend-darken shadow-lg rounded-lg overflow-hidden bg-red-600 hidden" id="message">
+                        <div class="w-2 bg-gray-800"></div>
+                        <div class="flex items-center px-2 py-3 bg-red-600">
+                            <div class="mx-3">
+                                <p class="text-white" id="messagetext"></p>
+                            </div>
+                        </div>
+                    </div>
+                    @if(session('successShema'))
+                        <div id="successMessage" class="bg-green-200 text-green-800 p-2 mb-4 rounded">
+                            {{ session('successShema') }}
+                        </div>
+                    @endif
+
+                    @if(session('errorShema'))
+                        <div id="errorMessage" class="bg-red-200 text-red-800 p-2 mb-4 rounded">
+                            {{ session('errorShema') }}
+                        </div>
+                    @endif
+
+                    <div class="font-medium">Adjust schema</div>
+                    <form action="{{route('seat.store')}}" method="post">
+                        @csrf
+                        <div class="mt-4 ">
+                            <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-800">Select a room</label>
+                            <select class=" w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="room_id">
+                                @foreach($rooms as $room)
+                                <option value="{{$room->id}}" class="w-full">
+                                    {{$room->name}}
+                                </option>
+                                @endforeach
+                            </select>
+
+                        </div>
+
+                        <div class="mt-4 ">
+                            <h1 class="block mb-2 text-sm font-bold m-3 text-gray-900 dark:text-gray-800">Select zone </h1>
+                            <div class="block w-full overflow-x-auto">
+                                <table class="items-center w-full border-collapse text-blueGray-700  ">
+                                    <thead class="thead-light ">
+                                    <tr>
+                                        <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                            Name
+                                        </th>
+                                        <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                            Tariff
+                                        </th>
+                                        <th class="px-6 bg-blueGray-50 text-blueGray-700 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left min-w-140-px">
+                                            total seats
+                                        </th>
+                                        <th class="px-6 bg-blueGray-50 text-blueGray-700 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left min-w-140-px">
+                                            add
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="zone-table-body">
+                                    @foreach($zones as $zone)
+                                        <tr id="zone-select">
+                                            <th class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
+                                                {{$zone->name}}
+                                            </th>
+                                            <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
+                                                {{$zone->tariff}}   DH                                          </td>
+                                            <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                                <div class="flex items-center">
+                                                    <span class="mr-2"> {{$zone->nbr_seats}}</span>
+                                                </div>
+                                            </td>
+                                            <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
+                                                <input type="checkbox" value="{{$zone->id}}" name="zone_id[]">
+                                                <input type="hidden" value="{{$zone->nbr_seats}}" name="nbrSeats">
+                                            </td>
+                                        </tr>
+                                    @endforeach
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="mt-4" id="ZoneArea ">
+
+                            </div>
+                            <label>Or </label>
+                            <button
+                                type="button"
+                                data-ripple-light="true"
+                                data-popover-target="popover-animation"
+                                class="m-3 middle none center rounded-lg bg-gradient-to-tr from-pink-600 to-pink-400 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                            >
+                                Add Zone
+                            </button>
+
+                        </div>
+
+                        <div class=" pt-4 border-t border-gray-200 rounded-b dark:border-gray-600">
+                            <button  type="submit" class="w-full bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none">Add</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div
+                data-popover="popover-animation"
+                data-popover-mount="opacity-100 scale-100"
+                data-popover-unmount="opacity-0 scale-0 pointer-events-none"
+                data-popover-transition="transition-all duration-200 origin-bottom"
+                class="absolute w-[500px] whitespace-normal break-words rounded-lg border border-blue-gray-50 bg-white p-4 font-sans text-sm font-normal text-blue-gray-500 shadow-lg shadow-blue-gray-500/10 focus:outline-none"
+
+            >
+                <h1>add zone </h1>
+                <form action="{{ url('zoneAjax') }}" method="POST" enctype="multipart/form-data" id="add">
+                    @csrf
+                    <div class="p-4 bg-gray-100 m-3"><div>
+                            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-800">name zone </label>
+                            <input type="text" name="name" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-800">tariff </label>
+                            <input type="number" name="tariff" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-800">total seats </label>
+                            <input type="number" name="nbr_seats" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        </div></div>
+                    <button type="submit" class="w-full bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none">Add</button>
+
+                </form>
+            </div>
+
         </div>
     </div>
 </div>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const modalgenreButtons = document.querySelectorAll('[data-modal-toggle="edit-modal-genre"]');
-        const modalmedicine = document.getElementById("edit-modal-genre");
-        const genreId = modalmedicine.querySelector('#genreId');
-        const namegenre = modalmedicine.querySelector('#namegenre');
+    $(document).ready(function(){
 
-        modalgenreButtons.forEach((button) => {
-            button.addEventListener("click", function () {
-                const genreValue = this.getAttribute("data-genre-id");
-                const genreName = this.getAttribute("data-genre-name");
+        $('#add').on('submit', function(event){
+            event.preventDefault();
+            jQuery.ajax({
+                url: "{{ url('zoneAjax') }}",
+                data: jQuery('#add').serialize(),
+                type: 'post',
+                success:function(response)
+                {
+                    $('#message').css('display','block');
+                    jQuery('#messagetext').html(response.message);
 
-                genreId.value = genreValue;
-                namegenre.value = genreName;
+                    var newRow = $('<tr id="zone-select"></tr>');
+                    newRow.append($('<th class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left"></th>').text(response.zone.name));
+                    newRow.append($('<td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 "></td>').text(response.zone.tariff + ' DH'));
+                    newRow.append($('<td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"></td>').text(response.zone.nbr_seats));
+                    newRow.append($('<td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"></td>').html('<input type="checkbox" value="' + response.zone.id + '" name="zone_id[]"><input type="hidden" value="' + response.zone.nbr_seats + '" name="nbrSeats">'));
+
+
+                    $('#zone-table-body').append(newRow);
+
+                    setTimeout(function() {
+                        $('#message').css('display', 'none');
+                    }, 3000);
+                }
+            });
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const modalgenreButtons = document.querySelectorAll('[data-modal-toggle="edit-modal-genre"]');
+            const modalmedicine = document.getElementById("edit-modal-genre");
+            const genreId = modalmedicine.querySelector('#genreId');
+            const namegenre = modalmedicine.querySelector('#namegenre');
+            modalgenreButtons.forEach((button) => {
+                button.addEventListener("click", function () {
+                    const genreValue = this.getAttribute("data-genre-id");
+                    const genreName = this.getAttribute("data-genre-name");
+                    genreId.value = genreValue;
+                    namegenre.value = genreName;
+                });
             });
         });
     });
-</script>
+    setTimeout(function() {
+        document.getElementById('successMessage').style.display = 'none';
+    }, 5000);
 
+    setTimeout(function() {
+        document.getElementById('errorMessage').style.display = 'none';
+    }, 5000);
+</script>
+<script
+    type="module"
+    src="https://unpkg.com/@material-tailwind/html@latest/scripts/popover.js"
+></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
 </body>
 </html>

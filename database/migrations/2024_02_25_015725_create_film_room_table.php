@@ -7,22 +7,16 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * The database connection that should be used by the migration.
-     *
-     * @var string
-     */
-    protected $connection = 'pgsql';
-    /**
      * Run the migrations.
      */
     public function up(): void
     {
-        schema::disableForeignKeyConstraints();
-
-        Schema::create('rooms', function (Blueprint $table) {
+        Schema::create('film_room', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->integer('total_seats');
+            $table->foreignId('room_id')->constrained('rooms')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('film_id')->constrained('films')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->date('show_time');
+
             $table->timestamps();
         });
     }
@@ -32,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('rooms');
+        Schema::dropIfExists('film_room');
     }
 };
