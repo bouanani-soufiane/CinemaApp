@@ -366,8 +366,9 @@
                                                         </div>
                                                         <!-- Modal body -->
                                                         <div class="p-4 md:p-5 space-y-4">
-                                                            <x-form action="{{route('film.store')}}" has-files>
+                                                            <x-form action="{{route('film.store')}}"  has-files>
                                                                 @csrf
+                                                                @method('POST')
 
                                                                 <div class="mt-4 ">
                                                                     <label for="title" class="text-white">title</label>
@@ -378,26 +379,26 @@
                                                                     <input type="text" name="plot" id="plot" class="w-full">
                                                                 </div>
                                                                 <div class="mt-4 ">
-                                                                    <label for="imdbRadting" class="text-white">imdb Radting</label>
-                                                                    <input type="text" name="imdbRadting" id="imdbRadting" class="w-full">
+                                                                    <label for="imdbRating" class="text-white">imdb Radting</label>
+                                                                    <input type="text" name="imdbRating" id="imdbRating" class="w-full">
                                                                 </div>
                                                                 <div class="mt-4 ">
-                                                                    <label for="released" class="text-white">release date</label>
-                                                                    <input type="date" name="released" id="released" class="w-full">
+                                                                    <label for="release_date" class="text-white">release date</label>
+                                                                    <input type="date" name="release_date" id="release_date" class="w-full">
                                                                 </div>
                                                                 <div class="mt-4 ">
                                                                     <label for="director" class="text-white">director</label>
                                                                     <input type="text" name="director" id="director" class="w-full">
                                                                 </div>
                                                                 <div class="mt-4 ">
-                                                                    <label for="runtime" class="text-white">runtime</label>
-                                                                    <input type="text" name="runtime" id="runtime" class="w-full">
+                                                                    <label for="duration" class="text-white">duration</label>
+                                                                    <input type="text" name="duration" id="duration" class="w-full">
                                                                 </div>
                                                                 <div class="mt-4 ">
                                                                     <select name="genre">
-                                                                        <label for="genre">select a genre</label>
-                                                                        <option selected disabled value="">genre</option>
                                                                         @forEach($genres as $genre)
+                                                                        <label for="genre">select a genre</label>
+                                                                        <option selected disabled value="">select genre</option>
                                                                         <option value="{{$genre->id}}">{{$genre->name}}</option>
                                                                         @endforeach
                                                                     </select>
@@ -405,10 +406,10 @@
                                                                 <div class="mt-4">                                                                   
                                                                         
                                                                         @foreach($rooms as $room)
-                                                                        <label for="date" class="text-white">date</label>
-                                                                        <input type="date" name="date" id="date" class="w-1/2">
+                                                                        <label for="room-date" class="text-white">date</label>
+                                                                        <input type="date" name="room-date" id="date" class="w-1/2">
                                                                         <label for="room" class="text-white">{{$room->name}}</label>
-                                                                        <input type="checkbox" value="{{$room->name}}">
+                                                                        <input type="checkbox" name="room" value="{{$room->name}}">
                                                                         @endforeach
                                                                     
                                                                 </div>

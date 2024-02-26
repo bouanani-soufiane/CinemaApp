@@ -26,7 +26,9 @@ class FilmRequest extends FormRequest{
              'release_date' => 'required',
              'director' => 'required',
              'duration' => 'required',
-             'genre_id' => 'required',
+             'genre' => 'required',
+             'room-date' => 'nullable',
+             'room' => 'nullable',
          ];
      }
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\FilmRequest;
 use App\Models\Film;
 use App\trait\ImageUpload;
+use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Http\Request;
 
 class FilmController extends Controller
@@ -31,8 +32,13 @@ class FilmController extends Controller
      */
     public function store(FilmRequest $request)
     {
-        dd($request);
+        dd($request->validate());
         $film = Film::create($request->validate());
+        $this->storeImg($film, $request->file('image'));
+
+
+        dd($request->room);
+        return redirect()->back();
         
     }
 
