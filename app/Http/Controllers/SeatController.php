@@ -43,7 +43,7 @@ class SeatController extends Controller
                     ]);
                 }
             }
-        return redirect()->back()->with('successShema', 'Schema created successfully!');
+            return redirect()->back()->with('successShema', 'Schema created successfully!');
         } catch (\Exception $e) {
             dd($e->getMessage());
             return redirect()->back()->with('errorShema', 'Failed to create schema. Please try again.');
