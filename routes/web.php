@@ -1,7 +1,11 @@
 <?php
 
+use App\Http\Controllers\Auth\poviderController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use Laravel\Socialite\Facades\Socialite;
+
+use function PHPUnit\Framework\callback;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +42,12 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+Route::get('/auth/{provider}/redirect', [PoviderController::class, 'redirect'])->name('auth.provider.redirect');
+Route::get('/auth/{provider}/callback', [PoviderController::class, 'callback'])->name('auth.provider.callback');
+
+
+
 
 require __DIR__ . '/auth.php';
 Route::resource('/actor', \App\Http\Controllers\ActorController::class);
