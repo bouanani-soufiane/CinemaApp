@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\poviderController;
 use App\Http\Controllers\ProfileController;
+use App\Models\Film;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
 
@@ -27,7 +28,8 @@ Route::get('/dashboard', function () {
     $genres = \App\Models\Genre::all();
     $rooms = \App\Models\Room::all();
     $zones = \App\Models\Zone::all();
-    return view('admin.dashboard', compact('genres','rooms','zones'));
+    $films = \App\Models\Film::all();   
+    return view('admin.dashboard', compact('genres','rooms','zones','films'));
 });
 
 Route::resource('/genre', \App\Http\Controllers\GenreController::class);
