@@ -19,7 +19,7 @@ use function PHPUnit\Framework\callback;
 */
 
 Route::get('/', function () {
-    $genres = \App\Models\Genre::all();
+    $genres = \App\Models\Genre::paginate(4);
 
     return view('home',compact('genres'));
 });

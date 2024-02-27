@@ -42,7 +42,15 @@ class GenreController extends Controller
      */
     public function show(Genre $genre)
     {
-        //
+        if (!$genre) {
+            abort(404);
+        }
+        $genre->load('film');
+
+        $films = $genre->film()->orderBy('created_at')->get();
+        dd($films);
+
+        return view('genre', compact('films', 'genre'));
     }
 
     /**
