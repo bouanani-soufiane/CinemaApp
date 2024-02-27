@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Genre;
+use App\Models\Image;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -16,7 +18,6 @@ class DatabaseSeeder extends Seeder
         \App\Models\User::factory(1)->create();
         \App\Models\Room::factory(3)->create();
         \App\Models\Zone::factory(3)->create();
-
          \App\Models\User::factory()->create([
              'name' => 'Test User',
              'email' => 'test@example.com',
@@ -24,5 +25,7 @@ class DatabaseSeeder extends Seeder
          $this->call(RoleSedeer::class);
          $this->call(adminSedeer::class);
 
+        Genre::factory(10)->create();
     }
 }
+

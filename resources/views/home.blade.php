@@ -152,18 +152,7 @@
 
             <div class="flex flex-col justify-between mt-4 bg-black/10 bg-blend-multiply rounded-3xl h-80 overflow-hidden bg-cover bg-center px-7 pt-4 pb-6 text-white"
                  style="background-image: url('images/inception.jpg');" >
-                <!-- <img class="object-cover w-full h-full" src="images/inception.jpg" alt=""> -->
-                <div class="flex -space-x-1 items-center ">
-                    <img class="rounded-full w-7 h-7 shadow-lg border border-white"
-                         src="https://api.lorem.space/image/face?w=32&amp;h=32&amp;hash=zsrj8csk" alt="" srcset="">
-                    <img class="rounded-full w-7 h-7 shadow-lg border border-white"
-                         src="https://api.lorem.space/image/face?w=32&amp;h=32&amp;hash=zsrj8cck"
-                         alt="" srcset="">
-                    <img class="rounded-full w-7 h-7 shadow-lg border border-white"
-                         src="https://api.lorem.space/image/face?w=32&amp;h=32&amp;hash=zsfj8cck"
-                         alt="" srcset="">
-                    <span class="pl-4 text-xs drop-shadow-lg">+8 friends are watching</span>
-                </div>
+
 
                 <div class="bg-gradient-to-r from-black/30 to-transparent -mx-7 -mb-6 px-7 pb-6 pt-2">
                     <span class="uppercase text-3xl font-semibold drop-shadow-lg ">Inception</span>
@@ -188,12 +177,43 @@
             <div class="flex items-center justify-between">
                 <span class="font-semibold text-gray-700 text-base dark:text-white">Top Stars</span>
                 <div class="flex items-center space-x-2 fill-gray-500">
-                    <svg class="h-7 w-7 rounded-full border p-1 hover:border-red-600 hover:fill-red-600 dark:fill-white dark:hover:fill-red-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                        <path d="M13.293 6.293L7.58 12l5.7 5.7 1.41-1.42 -4.3-4.3 4.29-4.293Z"></path>
-                    </svg>
-                    <svg class="h-7 w-7 rounded-full border p-1 hover:border-red-600 hover:fill-red-600 dark:fill-white dark:hover:fill-red-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                        <path d="M10.7 17.707l5.7-5.71 -5.71-5.707L9.27 7.7l4.29 4.293 -4.3 4.29Z"></path>
-                    </svg>
+                    <div class="flex items-center space-x-2 fill-gray-500 ">
+                        <nav role="navigation" aria-label="Pagination Navigation" class="flex items-center ">
+                            @if ($genres->onFirstPage())
+                                <span aria-disabled="true" aria-label="@lang('pagination.previous')" class="relative inline-flex items-center px-2  text-sm font-medium ">
+                                   <svg class="h-7 w-7 rounded-full border p-1 hover:border-red-600 hover:fill-red-600 dark:fill-white dark:hover:fill-red-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                        <path d="M13.293 6.293L7.58 12l5.7 5.7 1.41-1.42 -4.3-4.3 4.29-4.293Z"></path>
+                                   </svg>
+                                </span>
+                            @else
+                                <a href="{{ $genres->previousPageUrl() }}" rel="prev" aria-label="@lang('pagination.previous')" class="relative inline-flex items-center text-sm font-medium ">
+                                    <svg class="h-7 w-7 rounded-full border p-1 hover:border-red-600 hover:fill-red-600 dark:fill-white dark:hover:fill-red-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                        <path d="M13.293 6.293L7.58 12l5.7 5.7 1.41-1.42 -4.3-4.3 4.29-4.293Z"></path>
+                                    </svg>
+
+
+                                </a>
+                            @endif
+
+                            {{-- Next Page Link --}}
+                            @if ($genres->hasMorePages())
+                                <a href="{{ $genres->nextPageUrl() }}" rel="next" aria-label="@lang('pagination.next')" class="relative inline-flex items-center text-sm font-medium ">
+                                    <svg class="h-7 w-7 rounded-full border p-1 hover:border-red-600 hover:fill-red-600 dark:fill-white dark:hover:fill-red-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                        <path d="M10.7 17.707l5.7-5.71 -5.71-5.707L9.27 7.7l4.29 4.293 -4.3 4.29Z"></path>
+                                    </svg>
+
+
+                                </a>
+                            @else
+                                <span aria-disabled="true" aria-label="@lang('pagination.next')" class="relative inline-flex items-center px-2 py-2 text-sm font-medium ">
+                                   <svg class="h-7 w-7 rounded-full border p-1 hover:border-red-600 hover:fill-red-600 dark:fill-white dark:hover:fill-red-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                        <path d="M10.7 17.707l5.7-5.71 -5.71-5.707L9.27 7.7l4.29 4.293 -4.3 4.29Z"></path>
+                                    </svg>
+
+                            @endif
+                        </nav>
+                    </div>
+
                 </div>
             </div>
 
@@ -203,10 +223,12 @@
                         <img src="{{ asset('storage/'.$genre->image->path)}}" class="object-cover h-full w-full -z-10" alt="">
                         <div class="absolute top-0 h-full w-full bg-gradient-to-t from-black/50 p-3 flex flex-col justify-between">
 
-                            <a href="#" class="p-2.5 bg-gray-800/80 bg-white rounded-lg text-white self-end hover:bg-red-600/80">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
+                            <a href="{{route('genre.show',$genre->slug)}}" class="p-2.5 bg-gray-800/80 bg-white rounded-lg text-white self-end hover:bg-red-600/80">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                                 </svg>
+
                             </a>
 
                             <div class="self-center flex flex-col items-center space-y-2">
@@ -217,7 +239,7 @@
                         </div>
                     </div>
                 @endforeach
-                >
+
             </div>
         </section>
 

@@ -14,7 +14,8 @@ class FilmController extends Controller
      */
     public function index()
     {
-        //
+//        return view('show_film');
+
     }
 
     /**
@@ -38,7 +39,8 @@ class FilmController extends Controller
      */
     public function show(Film $film)
     {
-        //
+
+        return view('show_film');
     }
 
     /**
