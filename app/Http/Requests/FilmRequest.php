@@ -27,9 +27,13 @@ class FilmRequest extends FormRequest{
              'director' => 'required',
              'duration' => 'required',
              'genre' => 'required',
-             'room-date' => 'nullable',
+             'roomDate' => 'nullable',
              'room' => 'nullable',
          ];
+     }
+
+     public function room(){
+        return $this->input('room');
      }
 
 }

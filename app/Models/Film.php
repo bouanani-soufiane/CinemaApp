@@ -6,6 +6,7 @@ use App\trait\ImageUpload;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use app\models\Image;
 
 class Film extends Model
 {
@@ -15,7 +16,7 @@ class Film extends Model
     {
         return [
             'slug' => [
-                'source' => 'name'
+                'source' => 'title'
             ]
         ];
     }
@@ -29,12 +30,14 @@ class Film extends Model
         'plot',
         'imdbRating',
         'release_date',
+        'gernre_id',
         'director',
         'duration',
 
 
     ];
     protected $with = ['images','genres','rooms'];
+
     public function image()
     {
         return $this->morphOne(Image::class, 'imageable');

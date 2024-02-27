@@ -406,8 +406,8 @@
                                                                 <div class="mt-4">                                                                   
                                                                         
                                                                         @foreach($rooms as $room)
-                                                                        <label for="room-date" class="text-white">date</label>
-                                                                        <input type="date" name="room-date" id="date" class="w-1/2">
+                                                                        <label for="roomDate" class="text-white">date</label>
+                                                                        <input type="date" name="roomDate" id="roomDate" class="w-1/2">
                                                                         <label for="room" class="text-white">{{$room->name}}</label>
                                                                         <input type="checkbox" name="room" value="{{$room->id}}">
                                                                         @endforeach

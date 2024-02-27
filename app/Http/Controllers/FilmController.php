@@ -33,11 +33,9 @@ class FilmController extends Controller
     public function store(FilmRequest $request)
     {
         
-        $film = Film::create($request->validate());
-        dd($film->room);
+        $film = Film::create($request->validated());
         $this->storeImg($film, $request->file('image'));
-        
-
+        $film->room()->attach($request->room,['show_time' => $request->roomDate]);        
         return redirect()->back();
         
     }
