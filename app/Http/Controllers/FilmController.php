@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Film;
+use App\Models\Seat;
 use App\trait\ImageUpload;
 use Illuminate\Http\Request;
 
@@ -39,7 +40,6 @@ class FilmController extends Controller
      */
     public function show(Film $film)
     {
-
         return view('show_film', compact('film'));
     }
 

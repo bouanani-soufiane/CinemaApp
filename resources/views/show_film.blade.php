@@ -9,10 +9,27 @@
     <link rel="stylesheet" href="{{ asset('css/show_film.css') }}">
 </head>
 <body>
-
 <div class="movie-container">
-    <label> Selected  movie: <span>{{$film->title}}</span> </label>
+    <label>Selected movie: <span>{{$film->title}}</span></label>
+
+    @foreach($film->room as $room)
+        <div>Room name: <span>{{$room->name}}</span></div>
+        <p>Show time: <span>{{$room->pivot->show_time}}</span></p>
+
+        <div>Zones:</div>
+        <ul>
+            @foreach($room->zone as $zone)
+                <li>
+                     <ul>{{$zone->name}}</ul>
+                </li>
+
+            @endforeach
+                @break
+        </ul>
+    @endforeach
+
 </div>
+
 
 <ul class="showcase">
     <li>
@@ -32,73 +49,19 @@
     <div class="screen"></div>
 
     <div class="row">
-
-        <input type="checkbox" name="" id="" class="seat">
-        <input type="checkbox" name="" id="" class="seat">
-        <input type="checkbox" name="" id="" class="seat">
-        <input type="checkbox" name="" id="" class="seat">
-        <input type="checkbox" name="" id="" class="seat sold">
-        <input type="checkbox" name="" id="" class="seat">
-        <input type="checkbox" name="" id="" class="seat">
-        <input type="checkbox" name="" id="" class="seat">
-
-    </div>
-
-    <div class="row">
-        <input type="checkbox" name="" id="" class="seat">
-        <input type="checkbox" name="" id="" class="seat">
-        <input type="checkbox" name="" id="" class="seat">
-        <input type="checkbox" name="" id="" class="seat">
-        <input type="checkbox" name="" id="" class="seat sold">
-        <input type="checkbox" name="" id="" class="seat">
-        <input type="checkbox" name="" id="" class="seat">
-        <input type="checkbox" name="" id="" class="seat">
+        @foreach($film->room as $room)
+            @foreach($room->zone as $zone)
+                @foreach($zone->seats() as $seat)
+                    <input type="checkbox" name="" id="" class="seat">
+                    @break
+                @endforeach
+            @endforeach
+        @endforeach
 
     </div>
-    <div class="row">
-        <input type="checkbox" name="" id="" class="seat">
-        <input type="checkbox" name="" id="" class="seat">
-        <input type="checkbox" name="" id="" class="seat">
-        <input type="checkbox" name="" id="" class="seat">
-        <input type="checkbox" name="" id="" class="seat sold">
-        <input type="checkbox" name="" id="" class="seat">
-        <input type="checkbox" name="" id="" class="seat">
-        <input type="checkbox" name="" id="" class="seat">
+    <hr>
+    <hr>
 
-    </div>
-    <div class="row">
-        <input type="checkbox" name="" id="" class="seat">
-        <input type="checkbox" name="" id="" class="seat">
-        <input type="checkbox" name="" id="" class="seat">
-        <input type="checkbox" name="" id="" class="seat">
-        <input type="checkbox" name="" id="" class="seat sold">
-        <input type="checkbox" name="" id="" class="seat">
-        <input type="checkbox" name="" id="" class="seat">
-        <input type="checkbox" name="" id="" class="seat">
-
-    </div>
-    <div class="row">
-        <input type="checkbox" name="" id="" class="seat">
-        <input type="checkbox" name="" id="" class="seat">
-        <input type="checkbox" name="" id="" class="seat">
-        <input type="checkbox" name="" id="" class="seat">
-        <input type="checkbox" name="" id="" class="seat sold">
-        <input type="checkbox" name="" id="" class="seat">
-        <input type="checkbox" name="" id="" class="seat">
-        <input type="checkbox" name="" id="" class="seat">
-
-    </div>
-    <div class="row">
-        <input type="checkbox" name="" id="" class="seat">
-        <input type="checkbox" name="" id="" class="seat">
-        <input type="checkbox" name="" id="" class="seat">
-        <input type="checkbox" name="" id="" class="seat">
-        <input type="checkbox" name="" id="" class="seat sold">
-        <input type="checkbox" name="" id="" class="seat">
-        <input type="checkbox" name="" id="" class="seat">
-        <input type="checkbox" name="" id="" class="seat">
-
-    </div>
 </div>
 
 <p class="text">
@@ -107,6 +70,6 @@
     >0</span
     >
 </p>
-<script src="script.js"></script>
+<script src="{{asset('js/show_film.js')}}"></script>
 </body>
 </html>

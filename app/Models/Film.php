@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 class Film extends Model
 {
     use HasFactory,ImageUpload, Sluggable;
-
+    protected  $with = ['room'];
     public function sluggable(): array
     {
         return [
@@ -29,7 +29,7 @@ class Film extends Model
     }
     public function room()
     {
-        return $this->belongsTo(Room::class);
+        return $this->belongsToMany(Room::class)->withPivot('show_time');
     }
     public function genre()
     {
