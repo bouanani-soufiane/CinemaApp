@@ -32,11 +32,12 @@ class SeatController extends Controller
         try {
             $room_id = $request->input('room_id');
             Seat::where('room_id', $room_id)->delete();
-
             $zone_ids = $request->input('zone_id');
+            $nbrSeats = $request->input('nbrSeats');
+
             foreach ($zone_ids as $zone_id) {
-                $nbrSeats = $request->input('nbrSeats');
-                for ($i = 0; $i < $nbrSeats; $i++) {
+                $numSeatsForZone = $nbrSeats[$zone_id];
+                for ($i = 0; $i < $numSeatsForZone; $i++) {
                     Seat::create([
                         'room_id' => $room_id,
                         'zone_id' => $zone_id,

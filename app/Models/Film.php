@@ -3,12 +3,26 @@
 namespace App\Models;
 
 use App\trait\ImageUpload;
+use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Film extends Model
 {
-    use HasFactory,ImageUpload;
+    use HasFactory,ImageUpload, Sluggable;
+
+    public function sluggable(): array
+    {
+        return [
+            'slug' => [
+                'source' => 'title'
+            ]
+        ];
+    }
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
     public function image()
     {
         return $this->morphOne(Image::class, 'imageable');

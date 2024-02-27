@@ -48,7 +48,7 @@ class GenreController extends Controller
         $genre->load('film');
 
         $films = $genre->film()->orderBy('created_at')->get();
-        dd($films);
+
 
         return view('genre', compact('films', 'genre'));
     }
