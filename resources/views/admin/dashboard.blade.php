@@ -460,7 +460,7 @@
                                             <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
                                                 <input type="checkbox" value="{{$zone->id}}" name="zone_id[]">
                                                 <input type="number" name="nbrSeats[{{$zone->id}}]" class="hidden" value="{{$zone->nbr_seats}}">
-                                                
+
                                             </td>
                                         </tr>
                                     @endforeach

@@ -40,7 +40,7 @@ class FilmController extends Controller
     public function show(Film $film)
     {
 
-        return view('show_film');
+        return view('show_film', compact('film'));
     }
 
     /**
