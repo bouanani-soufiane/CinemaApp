@@ -21,19 +21,18 @@ use function PHPUnit\Framework\callback;
 Route::get('/', function () {
     return view('home');
 });
-Route::get('/dashboard', function () {
-    $genres = \App\Models\Genre::all();
-    $rooms = \App\Models\Room::all();
-    $zones = \App\Models\Zone::all();
-    return view('admin.dashboard', compact('genres','rooms','zones'));
-});
+
 
 Route::resource('/genre', \App\Http\Controllers\GenreController::class);
 
-
-Route::get('/gg', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/dashboard', function () {
+        $genres = \App\Models\Genre::all();
+        $rooms = \App\Models\Room::all();
+        $zones = \App\Models\Zone::all();
+        return view('admin.dashboard', compact('genres', 'rooms', 'zones'));
+});
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -41,8 +40,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/auth/{provider}/redirect', [PoviderController::class, 'redirect'])->name('auth.provider.redirect');
-Route::get('/auth/{provider}/callback', [PoviderController::class, 'callback'])->name('auth.provider.callback');
+Route::get('/auth/google/redirect', [poviderController::class, 'redirect'])->name('auth.provider.redirect');
+Route::get('/auth/google/callback', [poviderController::class, 'callbackgoogle'])->name('auth.provider.callback');
 
 
 
