@@ -423,9 +423,7 @@
                                 </option>
                                 @endforeach
                             </select>
-
                         </div>
-
                         <div class="mt-4 ">
                             <h1 class="block mb-2 text-sm font-bold m-3 text-gray-900 dark:text-gray-800">Select zone </h1>
                             <div class="block w-full overflow-x-auto">
@@ -461,7 +459,8 @@
                                             </td>
                                             <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
                                                 <input type="checkbox" value="{{$zone->id}}" name="zone_id[]">
-                                                <input type="hidden" value="{{$zone->nbr_seats}}" name="nbrSeats">
+                                                <input type="number" name="nbrSeats[{{$zone->id}}]" class="hidden" value="{{$zone->nbr_seats}}">
+
                                             </td>
                                         </tr>
                                     @endforeach
@@ -470,7 +469,6 @@
                                 </table>
                             </div>
                             <div class="mt-4" id="ZoneArea ">
-
                             </div>
                             <label>Or </label>
                             <button
@@ -481,9 +479,7 @@
                             >
                                 Add Zone
                             </button>
-
                         </div>
-
                         <div class=" pt-4 border-t border-gray-200 rounded-b dark:border-gray-600">
                             <button  type="submit" class="w-full bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none">Add</button>
                         </div>
@@ -496,7 +492,6 @@
                 data-popover-unmount="opacity-0 scale-0 pointer-events-none"
                 data-popover-transition="transition-all duration-200 origin-bottom"
                 class="absolute w-[500px] whitespace-normal break-words rounded-lg border border-blue-gray-50 bg-white p-4 font-sans text-sm font-normal text-blue-gray-500 shadow-lg shadow-blue-gray-500/10 focus:outline-none"
-
             >
                 <h1>add zone </h1>
                 <form action="{{ url('zoneAjax') }}" method="POST" enctype="multipart/form-data" id="add">
@@ -525,23 +520,26 @@
 <script>
     $(document).ready(function(){
 
-        $('#add').on('submit', function(event){
+        $('#add').on('submit', function(event) {
             event.preventDefault();
             jQuery.ajax({
                 url: "{{ url('zoneAjax') }}",
                 data: jQuery('#add').serialize(),
                 type: 'post',
-                success:function(response)
-                {
-                    $('#message').css('display','block');
+                success: function(response) {
+                    $('#message').css('display', 'block');
                     jQuery('#messagetext').html(response.message);
 
+                    // Construct the new row
                     var newRow = $('<tr id="zone-select"></tr>');
                     newRow.append($('<th class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left"></th>').text(response.zone.name));
                     newRow.append($('<td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 "></td>').text(response.zone.tariff + ' DH'));
                     newRow.append($('<td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"></td>').text(response.zone.nbr_seats));
-                    newRow.append($('<td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"></td>').html('<input type="checkbox" value="' + response.zone.id + '" name="zone_id[]"><input type="hidden" value="' + response.zone.nbr_seats + '" name="nbrSeats">'));
 
+                    var inputCell = $('<td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"></td>');
+                    inputCell.append('<input type="checkbox" value="' + response.zone.id + '" name="zone_id[]">');
+                    inputCell.append('<input type="hidden" value="' + response.zone.nbr_seats + '" name="nbrSeats[' + response.zone.id + ']">');
+                    newRow.append(inputCell);
 
                     $('#zone-table-body').append(newRow);
 

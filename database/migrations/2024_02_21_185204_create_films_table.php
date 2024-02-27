@@ -21,6 +21,7 @@ return new class extends Migration
         Schema::create('films', function (Blueprint $table) {
             $table->id();
             $table->string('title');
+            $table->string('slug');
             $table->string('plot');
             $table->string('imdbRating');
             $table->string('release_date');
