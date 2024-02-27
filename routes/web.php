@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Models\Film;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,8 +21,9 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     $genres = \App\Models\Genre::all();
     $rooms = \App\Models\Room::all();
-    $zones = \App\Models\Zone::all();   
-    return view('admin.dashboard', compact('genres','rooms','zones'));
+    $zones = \App\Models\Zone::all();
+    $films = \App\Models\Film::all();   
+    return view('admin.dashboard', compact('genres','rooms','zones','films'));
 });
 
 Route::resource('/genre', \App\Http\Controllers\GenreController::class);

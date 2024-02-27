@@ -36,9 +36,8 @@ class FilmController extends Controller
     {
         $film = Film::create($request->validated());
         $this->storeImg($film, $request->file('image'));
-        $film->room()->attach($request->room,['show_time' => $request->roomDate]);        
+        $film->room()->attach($request->room, ['show_time' => $request->roomDate]);
         return redirect()->back();
-        
     }
 
     /**
@@ -60,9 +59,12 @@ class FilmController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Film $film)
+    public function update(FilmRequest $request, Film $film)
     {
-        //
+        $film->update($request->validated());
+        $this->updateImg($film, $request->file('image'));
+        return redirect()->back();
+
     }
 
     /**
@@ -70,6 +72,8 @@ class FilmController extends Controller
      */
     public function destroy(Film $film)
     {
-        //
+        $film->delete();
+        return redirect()->back();
+
     }
 }

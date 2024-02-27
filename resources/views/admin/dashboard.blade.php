@@ -448,46 +448,46 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        @foreach($genres as $genre)
+                                        @foreach($films as $film)
                                         <tr class="border-b border-dashed last:border-b-0">
                                             <td class="p-3 pl-0">
                                                 <div class="flex items-center">
                                                     <div class="relative inline-block shrink-0 rounded-2xl me-3">
-                                                        <img src="{{ asset('storage/'.$genre->image->path)}}" class="w-[50px] h-[50px] inline-block shrink-0 rounded-2xl" alt="genre image">
+                                                        <img src="{{ asset('storage/'.$film->image->path)}}" class="w-[50px] h-[50px] inline-block shrink-0 rounded-2xl" alt="genre image">
 
                                                     </div>
                                                     <div class="flex flex-col justify-start">
-                                                        {{$genre->id}}
+                                                        {{$film->id}}
                                                     </div>
                                                 </div>
                                             </td>
                                             <td class="p-3 pr-0 text-end">
-                                                <span class="font-semibold text-light-inverse text-md/normal">{{$genre->name}}</span>
+                                                <span class="font-semibold text-light-inverse text-md/normal">{{$film->title}}</span>
                                             </td>
                                             <td class="p-3 pr-0 text-end">
                     <span class="text-center align-baseline inline-flex px-2 py-1 mr-auto items-center font-semibold text-base/none text-success bg-success-light rounded-lg">
-                    {{$genre->description}} </span>
+                    {{$film->plot}} </span>
                                             </td>
                                             <td class="p-3 pr-12 text-end">
-                                                <span class="text-center align-baseline inline-flex px-4 py-3 mr-auto items-center font-semibold text-[.95rem] leading-none text-primary bg-primary-light rounded-lg"> 12</span>
+                                                <span class="text-center align-baseline inline-flex px-4 py-3 mr-auto items-center font-semibold text-[.95rem] leading-none text-primary bg-primary-light rounded-lg"> {{$film->genre->name}}</span>
                                             </td>
 
                                             <td class="p-3 pr-0 text-end">
 
 
                                                 <div class="">
-                                                    <button  data-genre-name="{{$genre->name}}"  data-genre-id="{{$genre->id}}"  data-modal-target="edit-modal-genre" data-modal-toggle="edit-modal-genre" class=" bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full" type="button">
+                                                    <button  data-genre-name="{{$film->title}}"  data-genre-id="{{$film->id}}"  data-modal-target="edit-modal-film" data-modal-toggle="edit-modal-film" class=" bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full" type="button">
                                                         edit
                                                     </button>
 
-                                                    <div id="edit-modal-genre" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                                                    <div id="edit-modal-film" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
                                                         <div class="relative p-4 w-full max-w-2xl max-h-full">
                                                             <!-- Modal content -->
                                                             <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
                                                                 <!-- Modal header -->
                                                                 <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
                                                                     <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-                                                                        edit Medicine
+                                                                        edit Film
                                                                     </h3>
                                                                     <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="edit-modal-medicine">
                                                                         <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
@@ -498,26 +498,63 @@
                                                                 </div>
                                                                 <!-- Modal body -->
                                                                 <div class="p-4 md:p-5 space-y-4">
-                                                                    <form method="POST" action="{{ route('genre.update', $genre->slug)}}" enctype="multipart/form-data">
-                                                                        @csrf
-                                                                        @method('PATCH')
-                                                                        <div>
-                                                                            <input type="hidden" id="genreId" value="{{ $genre->id }}" name="id">
-                                                                            <label for="">name</label>
-                                                                            <input type="text" name="name" id="namegenre">
-                                                                        </div>
-                                                                        <div id="" class="mt-4 ">
-                                                                            <label for="">description</label>
-                                                                            <input type="text" name="description" id="">
-                                                                        </div>
-                                                                        <div>
-                                                                            <x-input name="image" id="image" type="file" class="p-4c w-full" :value="old('image')" required autofocus autocomplete="image"/>
-                                                                            <x-error field="iamge" class="text-red-500" :messages="$errors->get('image')" />
-                                                                        </div>
-                                                                        <div class=" pt-4 border-t border-gray-200 rounded-b dark:border-gray-600">
-                                                                            <button data-modal-hide="default-modal" type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">update</button>
-                                                                        </div>
-                                                                    </form>
+                                                                <x-form action="{{route('film.update',$film)}}"  has-files>
+                                                                @csrf
+                                                                @method('PATCH')
+
+                                                                <div class="mt-4 ">
+                                                                    <label for="title" class="text-white">title</label>
+                                                                    <input type="text" name="title" id="title">
+                                                                </div>
+                                                                <div class="mt-4 ">
+                                                                    <label for="plot" class="text-white">plot</label>
+                                                                    <input type="text" name="plot" id="plot" class="w-full">
+                                                                </div>
+                                                                <div class="mt-4 ">
+                                                                    <label for="imdbRating" class="text-white">imdb Radting</label>
+                                                                    <input type="text" name="imdbRating" id="imdbRating" class="w-full">
+                                                                </div>
+                                                                <div class="mt-4 ">
+                                                                    <label for="release_date" class="text-white">release date</label>
+                                                                    <input type="date" name="release_date" id="release_date" class="w-full">
+                                                                </div>
+                                                                <div class="mt-4 ">
+                                                                    <label for="director" class="text-white">director</label>
+                                                                    <input type="text" name="director" id="director" class="w-full">
+                                                                </div>
+                                                                <div class="mt-4 ">
+                                                                    <label for="duration" class="text-white">duration</label>
+                                                                    <input type="text" name="duration" id="duration" class="w-full">
+                                                                </div>
+                                                                <div class="mt-4 ">
+                                                                    <select name="genre_id">
+                                                                        <option selected disabled value="">select genre</option>
+                                                                        @forEach($genres as $genre)
+                                                                    
+                                                                        <option value="{{$genre->id}}">{{$genre->name}}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+                                                                <div class="mt-4">                                                                   
+                                                                        
+                                                                        @foreach($rooms as $room)
+                                                                        <label for="roomDate" class="text-white">date</label>
+                                                                        <input type="date" name="roomDate" id="roomDate" class="w-1/2">
+                                                                        <label for="room" class="text-white">{{$room->name}}</label>
+                                                                        <input type="checkbox" name="room" value="{{$room->id}}">
+                                                                        @endforeach
+                                                                    
+                                                                </div>
+                                                                <div class="mt-4">
+                                                                    <x-input name="image" id="image" type="file" class="p-4c w-full" :value="old('image')" required autofocus autocomplete="image"/>
+                                                                    <x-error field="iamge" class="text-red-500" :messages="$errors->get('image')" />
+
+                                                                </div>
+                                                                <div class=" pt-4 border-t border-gray-200 rounded-b dark:border-gray-600">
+                                                                    <button data-modal-hide="default-modal" type="submit" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add</button>
+                                                                </div>
+
+                                                            </x-form>
                                                                 </div>
                                                                 <!-- Modal footer -->
                                                                 <div class="flex items-center p-2  border-t border-gray-200 rounded-b dark:border-gray-600">
@@ -527,7 +564,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <form method="POST" action="{{ route('genre.update', $genre)}}">
+                                                <form method="POST" action="{{ route('film.destroy', $film)}}">
                                                     @method('DELETE')
                                                     @csrf
                                                     <button type="submit" class="mt-4  bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full">delete</button>
