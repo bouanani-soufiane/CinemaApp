@@ -30,13 +30,12 @@ class Film extends Model
         'plot',
         'imdbRating',
         'release_date',
-        'gernre_id',
+        'genre_id',
         'director',
         'duration',
 
 
     ];
-    protected $with = ['images','genres','rooms'];
 
     public function image()
     {

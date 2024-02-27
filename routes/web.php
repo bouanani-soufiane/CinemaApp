@@ -20,7 +20,7 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     $genres = \App\Models\Genre::all();
     $rooms = \App\Models\Room::all();
-    $zones = \App\Models\Zone::all();
+    $zones = \App\Models\Zone::all();   
     return view('admin.dashboard', compact('genres','rooms','zones'));
 });
 

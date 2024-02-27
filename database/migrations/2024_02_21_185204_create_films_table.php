@@ -27,7 +27,7 @@ return new class extends Migration
             $table->date('release_date');
             $table->string('director');
             $table->string('duration');
-            $table->foreignId('genre_id')->nullable()->constrained('genres')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('genre_id')->constrained('genres')->cascadeOnDelete()->cascadeOnUpdate();
 
             $table->timestamps();
         });

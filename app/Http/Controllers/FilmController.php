@@ -8,6 +8,8 @@ use App\trait\ImageUpload;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Http\Request;
 
+use function PHPUnit\Framework\isNull;
+
 class FilmController extends Controller
 {
     use ImageUpload;
@@ -32,7 +34,6 @@ class FilmController extends Controller
      */
     public function store(FilmRequest $request)
     {
-        
         $film = Film::create($request->validated());
         $this->storeImg($film, $request->file('image'));
         $film->room()->attach($request->room,['show_time' => $request->roomDate]);        

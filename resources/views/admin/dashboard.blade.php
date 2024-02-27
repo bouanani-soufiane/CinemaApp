@@ -395,10 +395,10 @@
                                                                     <input type="text" name="duration" id="duration" class="w-full">
                                                                 </div>
                                                                 <div class="mt-4 ">
-                                                                    <select name="genre">
-                                                                        @forEach($genres as $genre)
-                                                                        <label for="genre">select a genre</label>
+                                                                    <select name="genre_id">
                                                                         <option selected disabled value="">select genre</option>
+                                                                        @forEach($genres as $genre)
+                                                                    
                                                                         <option value="{{$genre->id}}">{{$genre->name}}</option>
                                                                         @endforeach
                                                                     </select>
