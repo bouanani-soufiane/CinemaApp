@@ -9,9 +9,10 @@ class Room extends Model
 {
     use HasFactory;
     protected $fillable = ['name','total_seats'];
+    protected $with = ['zone'];
     public function film()
     {
-        return $this->hasMany(Film::class);
+        return $this->belongsToMany(Film::class);
     }
     public function zone()
     {

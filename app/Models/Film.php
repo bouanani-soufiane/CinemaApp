@@ -3,23 +3,37 @@
 namespace App\Models;
 
 use App\trait\ImageUpload;
+use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Film extends Model
 {
-    use HasFactory,ImageUpload;
+    use HasFactory,ImageUpload, Sluggable;
+    protected  $with = ['room'];
+    public function sluggable(): array
+    {
+        return [
+            'slug' => [
+                'source' => 'title'
+            ]
+        ];
+    }
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
     public function image()
     {
         return $this->morphOne(Image::class, 'imageable');
     }
     public function room()
     {
-        return $this->belongsTo(Room::class);
+        return $this->belongsToMany(Room::class)->withPivot('show_time');
     }
     public function genre()
     {
-        return $this->belongsTo(Genre::class);
+        return $this->belongsTo(Genre::class , 'genre_id');
     }
     public function reservation()
     {

@@ -17,4 +17,8 @@ class Zone extends Model
     {
         return $this->belongsToMany(Room::class, 'seats');
     }
+    public function seats()
+    {
+        return Seat::whereIn('room_id', $this->room()->pluck('rooms.id'))->get();
+    }
 }
