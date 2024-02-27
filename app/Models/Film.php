@@ -13,7 +13,9 @@ class Film extends Model
 
     protected  $with = ['room'];
 
-
+    protected $dispatchedEvents = [
+        'updated' => '',
+    ];
 
     public function sluggable(): array
     {
