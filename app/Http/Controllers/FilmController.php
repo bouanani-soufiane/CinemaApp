@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\FilmUpdated;
 use App\Http\Requests\FilmRequest;
 use App\Models\Film;
 use App\Models\Seat;
@@ -65,6 +66,7 @@ class FilmController extends Controller
     {
         $film->update($request->validated());
         $this->updateImg($film, $request->file('image'));
+        event(new FilmUpdated($film));
         return redirect()->back();
 
     }

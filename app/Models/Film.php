@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Events\FilmUpdated;
 use App\trait\ImageUpload;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -14,7 +15,7 @@ class Film extends Model
     protected  $with = ['room'];
 
     protected $dispatchedEvents = [
-        'updated' => '',
+        'updated' => FilmUpdated::class,
     ];
 
     public function sluggable(): array
