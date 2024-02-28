@@ -15,7 +15,7 @@ class FilmUpdatedNotification
      */
     public function __construct()
     {
-        //
+        
     }
 
     /**
@@ -23,7 +23,7 @@ class FilmUpdatedNotification
      */
     public function handle(FilmUpdateEvent $event)
     {
-        dd($event->film);
+        
         return Mail::to('chag.med.amine@gmail.com')->send(new MailFilmUpdated($event->film));
     }
 }
