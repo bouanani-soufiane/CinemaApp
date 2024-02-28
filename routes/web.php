@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\poviderController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
@@ -18,16 +19,9 @@ use function PHPUnit\Framework\callback;
 |
 */
 
-Route::get('/', function () {
-    $genres = \App\Models\Genre::paginate(4);
-    return view('home',compact('genres'));
-});
+Route::get('/',[HomeController::class,'index']);
+Route::get('/search',[HomeController::class,'search'])->name('film.search');
 
-Route::get('/dashboard', function () {
-    $genres = \App\Models\Genre::all();
-    $rooms = \App\Models\Room::all();
-    $zones = \App\Models\Zone::all();
-    return view('admin.dashboard', compact('genres','rooms','zones'));
 
 
 Route::resource('/genre', \App\Http\Controllers\GenreController::class);
