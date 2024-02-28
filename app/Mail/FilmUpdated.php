@@ -16,6 +16,9 @@ class FilmUpdated extends Mailable
     use Queueable, SerializesModels;
 
     public $film;
+    
+    
+
 
     /**
      * Create a new message instance.
