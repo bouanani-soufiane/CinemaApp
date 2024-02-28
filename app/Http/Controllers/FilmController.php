@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Film;
+use App\Models\Reservation;
 use App\Models\Seat;
 use App\trait\ImageUpload;
 use Illuminate\Http\Request;
@@ -40,6 +41,7 @@ class FilmController extends Controller
      */
     public function show(Film $film)
     {
+        Reservation::all();
         return view('show_film', compact('film'));
     }
 

@@ -52,12 +52,13 @@
     </li>
     <li>
         <div class="seat sold"></div>
-        <small>Sold</small>
+        <small>Sold </small>
     </li>
 </ul>
 <div class="container">
     <div class="screen"></div>
     <form action="{{route('reservation.store')}}" method="post">
+        @csrf
         @foreach($film->room as $room)
             @php $prevZoneId = null; @endphp
             <div class="row">
@@ -68,19 +69,21 @@
            <hr>
            <hr>
             <div class="row">
-
-{{--                @auth--}}
-{{--                    {{ auth()->user()->id }}--}}
-{{--                @endauth--}}
                 @endif
-                <input type="checkbox" name="" id="" class="seat">
-                <span>{{$seat->zone_id}}</span>
+
+                <input type="checkbox" name="seat_id" value="{{$seat->id}}" class="seat" >
+                <span>{{$seat->id}}</span>
+
+                <input type="hidden" name="user_id" value="{{auth()->user()->id}}">
+                <input type="hidden" name="film_id" value="{{$film->id}}">
+
                 @php $prevZoneId = $seat->zone_id; @endphp
                 @endforeach
                 @break
                 @endforeach
             </div>
         @endforeach
+        <input type="submit" value="book now">
     </form>
 
 </div>
@@ -89,3 +92,5 @@
 <script src="{{asset('js/show_film.js')}}"></script>
 </body>
 </html>
+
+

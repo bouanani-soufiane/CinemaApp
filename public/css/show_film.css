@@ -95,6 +95,9 @@ body {
 
 .row {
     display: flex;
+    flex-wrap: wrap;
+    max-width: 400px;
+    justify-content: center;
 }
 
 .screen {

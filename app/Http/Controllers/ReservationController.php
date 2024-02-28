@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\SeatBookedEvent;
+use App\Http\Requests\ReservationRequest;
 use App\Models\Reservation;
+use App\Models\Seat;
 use Illuminate\Http\Request;
 
 class ReservationController extends Controller
@@ -26,9 +29,11 @@ class ReservationController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ReservationRequest $request)
     {
-        //
+        $reservation = Reservation::create($request->validated());
+        SeatBookedEvent::Dispatch($reservation);
+        return redirect()->back();
     }
 
     /**
