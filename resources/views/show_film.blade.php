@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="style.css"/>
     <title>Movie Seat Booking</title>
+
     <link rel="stylesheet" href="{{ asset('css/show_film.css') }}">
 </head>
 <body>
 <div class="movie-container">
+
+    <img src="{{ asset('storage/'.$film->image->path)}}" class="w-full" style="height: 200px  ; margin: auto ; width: 100%" > <br>
     <label>Selected movie: <span>{{$film->title}}</span></label>
 
     @foreach($film->room as $room)
@@ -18,14 +21,22 @@
 
         <div>Zones:</div>
         <ul>
-            @foreach($room->zone as $zone)
-                <li>
-                     <ul>{{$zone->name}}</ul>
-                </li>
+            @php
+                $uniqueZoneNames = [];
+            @endphp
 
+            @foreach($room->zone as $zone)
+                @if(!in_array($zone->name, $uniqueZoneNames))
+                    <li>
+                        <ul>{{$zone->name}} : <span> {{$zone->tariff}} DH </span></ul>
+                    </li>
+                    @php
+                        $uniqueZoneNames[] = $zone->name;
+                    @endphp
+                @endif
             @endforeach
-                @break
         </ul>
+
     @endforeach
 
 </div>
@@ -42,34 +53,47 @@
     </li>
     <li>
         <div class="seat sold"></div>
-        <small>Sold</small>
+        <small>Sold </small>
     </li>
 </ul>
 <div class="container">
     <div class="screen"></div>
-
-    <div class="row">
+    <form action="{{route('reservation.store')}}" method="post">
+        @csrf
         @foreach($film->room as $room)
-            @foreach($room->zone as $zone)
-                @foreach($zone->seats() as $seat)
-                    <input type="checkbox" name="" id="" class="seat">
-                    @break
+            @php $prevZoneId = null; @endphp
+            <div class="row">
+                @foreach($room->zone as $zone)
+                    @foreach($zone->seats() as $seat)
+                        @if($prevZoneId !== null && $prevZoneId !== $seat->zone_id)
+            </div>
+           <hr>
+           <hr>
+            <div class="row">
+                @endif
+
+                <input type="checkbox" name="seat_id[]" value="{{$seat->id}}" class="seat" >
+                <span>{{$seat->id}}</span>
+
+                <input type="hidden" name="user_id" value="{{auth()->user()->id}}">
+                <input type="hidden" name="film_id" value="{{$film->id}}">
+                <input type="hidden" name="room_name" value="{{$room->name}}">
+                <input type="hidden" name="showingTime" value="{{$room->pivot->show_time}}">
+
+                @php $prevZoneId = $seat->zone_id; @endphp
                 @endforeach
-            @endforeach
+                @break
+                @endforeach
+            </div>
         @endforeach
 
-    </div>
-    <hr>
-    <hr>
+        <button type="submit" class="booking-btn"> book now </button>
+    </form>
 
 </div>
 
-<p class="text">
-    You have selected <span id="count">0</span> seat for a price of RS.<span
-        id="total"
-    >0</span
-    >
-</p>
-<script src="{{asset('js/show_film.js')}}"></script>
+
 </body>
 </html>
+
+

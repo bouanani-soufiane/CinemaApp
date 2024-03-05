@@ -63,3 +63,5 @@ Route::resource('/zone', \App\Http\Controllers\ZoneController::class);
 
 Route::get('/fetch', [\App\Http\Controllers\FetchFilmController::class, 'fetchApiMovie']);
 Route::post('/zoneAjax', [\App\Http\Controllers\ZoneController::class, 'storeAjax']);
+
+Route::get('/mail', [\App\Http\Controllers\TestMail::class, 'index']);
