@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\FilmUpdated;
+use App\Http\Requests\FilmRequest;
 use App\Models\Film;
-use App\Models\Reservation;
 use App\Models\Seat;
 use App\trait\ImageUpload;
+use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Http\Request;
+
+use function PHPUnit\Framework\isNull;
 
 class FilmController extends Controller
 {
@@ -16,56 +20,36 @@ class FilmController extends Controller
      */
     public function index()
     {
-//        return view('show_film');
+       return view('show_film');
 
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function store(FilmRequest $request)
     {
-        //
+        $film = Film::create($request->validated());
+        $this->storeImg($film, $request->file('image'));
+        $film->room()->attach($request->room, ['show_time' => $request->roomDate]);
+        return redirect()->back();
     }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
     public function show(Film $film)
     {
-        Reservation::all();
         return view('show_film', compact('film'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Film $film)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Film $film)
-    {
-        //
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    public function update(FilmRequest $request, Film $film)
+    {
+        $film->update($request->validated());
+        $this->updateImg($film, $request->file('image'));
+        event(new FilmUpdated($film));
+        return redirect()->back();
+
+    }
     public function destroy(Film $film)
     {
-        //
+        $film->delete();
+        return redirect()->back();
+
     }
 }

@@ -5,8 +5,8 @@
 }
 
 body {
-    background-color: #242333;
-    color: #fff;
+    background-color: #ddd;
+    color: #000;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -14,6 +14,7 @@ body {
     height: 100vh;
     font-family: "Lato", sans-serif;
     margin: 0;
+    margin: 300px 0;
 }
 
 .movie-container {
@@ -32,13 +33,10 @@ body {
     appearance: none;
 }
 
-.container {
-    perspective: 1000px;
-    margin-bottom: 30px;
-}
+
 
 .seat {
-    background-color: #444451;
+    background-color: #727272;
     height: 26px;
     width: 32px;
     margin: 3px;
@@ -48,11 +46,51 @@ body {
 }
 
 .seat.selected {
-    background-color: green;
+    background-color: #ffde22;
+}
+input[type="checkbox"]:checked {
+    accent-color: green;
+}
+input[type="checkbox"][disabled] + svg {
+    fill:red ;
+}
+.container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
 }
 
+.container {
+    display: block;
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+}
+
+.container svg {
+    position: relative;
+    top: 0;
+    left: 0;
+    height: 50px;
+    width: 50px;
+    transition: all 0.3s;
+    fill: #666;
+}
+
+.container svg:hover {
+    transform: scale(1.1);
+}
+
+.container input:checked ~ svg {
+    fill: #ffeb49;
+}
+
+
+
 .seat.sold {
-    background-color: #fff;
+    background-color: #f00;
 }
 
 .seat:nth-of-type(2) {
@@ -222,6 +260,10 @@ p.text span{
     transition: 0.375s ease;
     text-align: center;
 }
+
+
+
+
 .booking-btn {
     background-color: #f56565;
     color: #ffffff;
@@ -229,11 +271,181 @@ p.text span{
     padding: 0.5rem 1rem;
     border-radius: 9999px; /* Rounded to ensure a circular button */
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Optional shadow for depth */
-    margin: auto;
     width: 150px;
     text-align: center;
+    margin-top: 20px; /* Add some space between the button and other content */
 }
 
 .booking-btn:hover {
     background-color: #e53e3e;
 }
+.page-wrapper {
+    margin: 2em;
+}
+
+.title-flex {
+    display: flex;
+    margin-bottom: 1em;
+}
+
+.title-flex h2 {
+    margin-right: 2em;
+}
+
+.cards-grid {
+    font-size: 2em;
+    display: grid;
+    grid-gap: 1em;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
+
+.cards-grid > * {
+    background-color: skyblue;
+}
+
+.wrapper-16-by-9 {
+    position: relative;
+    height: 0;
+    padding: 56.25% 0 0 0;
+}
+
+.card-flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    max-width: 100%; /* not needed? */
+    max-height: 100%; /* not needed? */
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.movie {
+    max-width: 800px;
+    border-radius: 5px;
+    display: flex;
+    box-shadow: 0 5px 20px 10px rgba(0, 0, 0, .2);
+    overflow: hidden;
+}
+
+.movie__hero {
+    flex: 0 0 45%;
+}
+
+.movie__img {
+    width: 100%;
+    display: block;
+    height: 100%;
+}
+
+.movie__content {
+    background-color: #fff;
+    flex: 1;
+    padding: 5px 30px;
+    display: flex;
+    flex-direction: column;
+    color: #000;
+}
+
+.movie__price {
+    background:linear-gradient(to bottom, #A9C9FF 0%, #FFBBEC 100%);
+    flex: 0 0 50px;
+    font-size: 18px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    color: rgb(255, 255, 255);
+    writing-mode: vertical-lr;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.movie__title {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.heading__primary {
+    font-size: 16px;
+    margin-right: auto;
+    color: royalblue;
+}
+
+.fa-fire {
+    color: salmon;
+}
+
+.movie__tag {
+    font-size: 10px;
+    color: #fff;
+    padding: 2px 7px;
+    border-radius: 100px;
+    margin-right: 8px;
+    display: block;
+    text-transform: uppercase;
+
+}
+
+.movie__tag--1 {
+    background-color: #A9C9FF;
+}
+
+.movie__tag--2 {
+    background-color:#FFBBEC;
+}
+
+.movie__description {
+    font-size: 14px;
+    padding: 0;
+    margin: 0
+}
+
+.movie__details {
+    display: flex;
+}
+
+.movie__detail {
+    font-size: 13px;
+    margin-right: 20px;
+    display: flex;
+}
+
+.icons i {
+    margin-right: 3px;
+    font-size: 18px;
+}
+
+.icons-red {
+    color: salmon;
+}
+.icons-grey {
+    color: grey;
+}
+
+.icons-yellow {
+    color: rgb(190, 190, 71);
+
+}
+
+
+
+
+
+
+

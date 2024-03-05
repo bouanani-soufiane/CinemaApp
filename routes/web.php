@@ -24,11 +24,28 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    $genres = \App\Models\Genre::all();
-    $rooms = \App\Models\Room::all();
-    $zones = \App\Models\Zone::all();
-    return view('admin.dashboard', compact('genres','rooms','zones'));
-});
+    $genres = \App\Models\Genre::orderBy('id', 'asc')->withCount('film')->with('film')->get();
+    $rooms = \App\Models\Room::orderBy('id', 'asc')->withCount('zone')->get();
+    $zones = \App\Models\Zone::orderBy('id', 'asc')->with('room')->get();
+    $films = \App\Models\Film::orderBy('id', 'asc')->with('genre','room')->get();
+    $usersCount = \App\Models\User::count();
+
+
+    $mostReservedFilm = \App\Models\Reservation::select('film_id', DB::raw('COUNT(*) as reservations_count'))
+        ->groupBy('film_id')
+        ->orderByDesc('reservations_count')
+        ->first();
+
+    // Find the details of the most reserved film
+    $mostReservedFilmDetails = $mostReservedFilm ? \App\Models\Film::find($mostReservedFilm->film_id) : null;
+
+
+
+
+
+
+    return view('admin.dashboard', compact('genres','rooms','zones','films', 'usersCount', 'mostReservedFilm', 'mostReservedFilmDetails'));
+});;
 
 Route::resource('/genre', \App\Http\Controllers\GenreController::class);
 
@@ -43,10 +60,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/auth/{provider}/redirect', [PoviderController::class, 'redirect'])->name('auth.provider.redirect');
-Route::get('/auth/{provider}/callback', [PoviderController::class, 'callback'])->name('auth.provider.callback');
-
-
+Route::get('/auth/google/redirect', [poviderController::class, 'redirect'])->name('auth.provider.redirect');
+Route::get('/auth/google/callback', [poviderController::class, 'callbackgoogle'])->name('auth.provider.callback');
 
 
 require __DIR__ . '/auth.php';

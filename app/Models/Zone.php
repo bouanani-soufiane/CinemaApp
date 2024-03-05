@@ -19,6 +19,8 @@ class Zone extends Model
     }
     public function seats()
     {
-        return Seat::whereIn('room_id', $this->room()->pluck('rooms.id'))->get();
+        return Seat::whereIn('room_id', $this->room()->pluck('rooms.id'))
+            ->orderBy('id')
+            ->get();
     }
 }
