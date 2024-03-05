@@ -25,6 +25,8 @@ class ReservationRequest extends FormRequest
             'user_id' => 'required',
             'film_id' => 'required',
             'seat_id' => 'required',
+            'showingTime' => 'required',
+            'room_name' => 'required',
         ];
     }
 }

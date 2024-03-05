@@ -19,7 +19,7 @@ class Film extends Model
             ]
         ];
     }
-    public function getRouteKeyName(): string
+        public function getRouteKeyName(): string
     {
         return 'slug';
     }

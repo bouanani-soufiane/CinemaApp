@@ -6,12 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="stylesheet" href="style.css"/>
     <title>Movie Seat Booking</title>
+
     <link rel="stylesheet" href="{{ asset('css/show_film.css') }}">
 </head>
 <body>
 <div class="movie-container">
 
-    <img src="{{ asset('storage/'.$film->image->path)}}">
+    <img src="{{ asset('storage/'.$film->image->path)}}" class="w-full" style="height: 200px  ; margin: auto ; width: 100%" > <br>
     <label>Selected movie: <span>{{$film->title}}</span></label>
 
     @foreach($film->room as $room)
@@ -71,11 +72,13 @@
             <div class="row">
                 @endif
 
-                <input type="checkbox" name="seat_id" value="{{$seat->id}}" class="seat" >
+                <input type="checkbox" name="seat_id[]" value="{{$seat->id}}" class="seat" >
                 <span>{{$seat->id}}</span>
 
                 <input type="hidden" name="user_id" value="{{auth()->user()->id}}">
                 <input type="hidden" name="film_id" value="{{$film->id}}">
+                <input type="hidden" name="room_name" value="{{$room->name}}">
+                <input type="hidden" name="showingTime" value="{{$room->pivot->show_time}}">
 
                 @php $prevZoneId = $seat->zone_id; @endphp
                 @endforeach
@@ -83,13 +86,13 @@
                 @endforeach
             </div>
         @endforeach
-        <input type="submit" value="book now">
+
+        <button type="submit" class="booking-btn"> book now </button>
     </form>
 
 </div>
 
 
-<script src="{{asset('js/show_film.js')}}"></script>
 </body>
 </html>
 
