@@ -331,6 +331,256 @@
                 </div>
 
             </div>
+            <div class="mb-4 ">
+                <!-- component -->
+                <div class="w-full max-w-full px-3 mb-6  mx-auto">
+                    <div class="relative flex-[1_auto] flex flex-col break-words min-w-0 bg-clip-border rounded-[.95rem] bg-white m-5">
+                        <div class="relative flex flex-col min-w-0 break-words border border-dashed bg-clip-border rounded-2xl border-stone-200 bg-light/30">
+                            <!-- card header -->
+                            <div class="px-9 pt-5 flex justify-between items-stretch flex-wrap min-h-[70px] pb-0 bg-transparent">
+                                <h3 class="flex flex-col items-start justify-center m-2 ml-0 font-medium text-xl/tight text-dark">
+                                    Film
+                                </h3>
+                                <div class="relative flex flex-wrap items-center my-2">
+                                    <a href="javascript:void(0)" class="inline-block text-[.925rem] font-medium leading-normal text-center align-middle cursor-pointer rounded-2xl transition-colors duration-150 ease-in-out text-light-inverse bg-light-dark border-light shadow-none border-0 py-2 px-5 hover:bg-secondary active:bg-light focus:bg-light">        <div class="relative flex flex-wrap items-center my-2">
+
+                                            <button data-modal-target="default-modal1" data-modal-toggle="default-modal1" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
+                                                Add
+                                            </button>
+
+                                            <div id="default-modal1" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                                                <div class="relative p-4 w-full max-w-2xl max-h-full">
+                                                    <!-- Modal content -->
+                                                    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                                        <!-- Modal header -->
+                                                        <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                                                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                                                                Add Film
+                                                            </h3>
+                                                            <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="default-modal1">
+                                                                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                                                </svg>
+                                                                <span class="sr-only">Close modal</span>
+                                                            </button>
+                                                        </div>
+                                                        <!-- Modal body -->
+                                                        <div class="p-4 md:p-5 space-y-4">
+                                                            <x-form action="{{route('film.store')}}"  has-files>
+                                                                @csrf
+                                                                @method('POST')
+
+                                                                <div class="mt-4 ">
+                                                                    <label for="title" class="text-white">title</label>
+                                                                    <input type="text" name="title" id="title">
+                                                                </div>
+                                                                <div class="mt-4 ">
+                                                                    <label for="plot" class="text-white">plot</label>
+                                                                    <input type="text" name="plot" id="plot" class="w-full">
+                                                                </div>
+                                                                <div class="mt-4 ">
+                                                                    <label for="imdbRating" class="text-white">imdb Radting</label>
+                                                                    <input type="text" name="imdbRating" id="imdbRating" class="w-full">
+                                                                </div>
+                                                                <div class="mt-4 ">
+                                                                    <label for="release_date" class="text-white">release date</label>
+                                                                    <input type="date" name="release_date" id="release_date" class="w-full">
+                                                                </div>
+                                                                <div class="mt-4 ">
+                                                                    <label for="director" class="text-white">director</label>
+                                                                    <input type="text" name="director" id="director" class="w-full">
+                                                                </div>
+                                                                <div class="mt-4 ">
+                                                                    <label for="duration" class="text-white">duration</label>
+                                                                    <input type="text" name="duration" id="duration" class="w-full">
+                                                                </div>
+                                                                <div class="mt-4 ">
+                                                                    <select name="genre_id">
+                                                                        <option selected disabled value="">select genre</option>
+                                                                        @forEach($genres as $genre)
+                                                                    
+                                                                        <option value="{{$genre->id}}">{{$genre->name}}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+                                                                <div class="mt-4">                                                                   
+                                                                        
+                                                                        @foreach($rooms as $room)
+                                                                        <label for="roomDate" class="text-white">date</label>
+                                                                        <input type="date" name="roomDate" id="roomDate" class="w-1/2">
+                                                                        <label for="room" class="text-white">{{$room->name}}</label>
+                                                                        <input type="checkbox" name="room" value="{{$room->id}}">
+                                                                        @endforeach
+                                                                    
+                                                                </div>
+                                                                <div class="mt-4">
+                                                                    <x-input name="image" id="image" type="file" class="p-4c w-full" :value="old('image')" required autofocus autocomplete="image"/>
+                                                                    <x-error field="iamge" class="text-red-500" :messages="$errors->get('image')" />
+
+                                                                </div>
+                                                                <div class=" pt-4 border-t border-gray-200 rounded-b dark:border-gray-600">
+                                                                    <button data-modal-hide="default-modal" type="submit" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add</button>
+                                                                </div>
+
+                                                            </x-form>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <!-- end card header -->
+                            <!-- card body  -->
+                            <div class="flex-auto block py-8 pt-6 px-9">
+                                <div class="overflow-x-auto">
+                                    <table class="w-full my-0 align-middle text-dark border-neutral-200">
+                                        <thead class="align-bottom">
+                                        <tr class="font-semibold text-[0.95rem] text-secondary-dark">
+                                            <th class="pb-3 text-start min-w-[175px]">Film</th>
+                                            <th class="pb-3 text-end min-w-[100px]">Title</th>
+                                            <th class="pb-3 text-end min-w-[100px]">Description</th>
+                                            <th class="pb-3 pr-12 text-end min-w-[175px]">Genre</th>
+                                            <th class="pb-3 pr-12 text-end min-w-[100px]">Actions</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach($films as $film)
+                                        <tr class="border-b border-dashed last:border-b-0">
+                                            <td class="p-3 pl-0">
+                                                <div class="flex items-center">
+                                                    <div class="relative inline-block shrink-0 rounded-2xl me-3">
+                                                        <img src="{{ asset('storage/'.$film->image->path)}}" class="w-[50px] h-[50px] inline-block shrink-0 rounded-2xl" alt="genre image">
+
+                                                    </div>
+                                                    <div class="flex flex-col justify-start">
+                                                        {{$film->id}}
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="p-3 pr-0 text-end">
+                                                <span class="font-semibold text-light-inverse text-md/normal">{{$film->title}}</span>
+                                            </td>
+                                            <td class="p-3 pr-0 text-end">
+                    <span class="text-center align-baseline inline-flex px-2 py-1 mr-auto items-center font-semibold text-base/none text-success bg-success-light rounded-lg">
+                    {{$film->plot}} </span>
+                                            </td>
+                                            <td class="p-3 pr-12 text-end">
+                                                <span class="text-center align-baseline inline-flex px-4 py-3 mr-auto items-center font-semibold text-[.95rem] leading-none text-primary bg-primary-light rounded-lg"> {{$film->genre->name}}</span>
+                                            </td>
+
+                                            <td class="p-3 pr-0 text-end">
+
+
+                                                <div class="">
+                                                    <button  data-genre-name="{{$film->title}}"  data-genre-id="{{$film->id}}"  data-modal-target="edit-modal-film" data-modal-toggle="edit-modal-film" class=" bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full" type="button">
+                                                        edit
+                                                    </button>
+
+                                                    <div id="edit-modal-film" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                                                        <div class="relative p-4 w-full max-w-2xl max-h-full">
+                                                            <!-- Modal content -->
+                                                            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                                                <!-- Modal header -->
+                                                                <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                                                                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                                                                        edit Film
+                                                                    </h3>
+                                                                    <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="edit-modal-medicine">
+                                                                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                                                        </svg>
+                                                                        <span class="sr-only">Close modal</span>
+                                                                    </button>
+                                                                </div>
+                                                                <!-- Modal body -->
+                                                                <div class="p-4 md:p-5 space-y-4">
+                                                                <x-form action="{{route('film.update',$film)}}"  has-files>
+                                                                @csrf
+                                                                @method('PATCH')
+
+                                                                <div class="mt-4 ">
+                                                                    <label for="title" class="text-white">title</label>
+                                                                    <input type="text" name="title" id="title">
+                                                                </div>
+                                                                <div class="mt-4 ">
+                                                                    <label for="plot" class="text-white">plot</label>
+                                                                    <input type="text" name="plot" id="plot" class="w-full">
+                                                                </div>
+                                                                <div class="mt-4 ">
+                                                                    <label for="imdbRating" class="text-white">imdb Radting</label>
+                                                                    <input type="text" name="imdbRating" id="imdbRating" class="w-full">
+                                                                </div>
+                                                                <div class="mt-4 ">
+                                                                    <label for="release_date" class="text-white">release date</label>
+                                                                    <input type="date" name="release_date" id="release_date" class="w-full">
+                                                                </div>
+                                                                <div class="mt-4 ">
+                                                                    <label for="director" class="text-white">director</label>
+                                                                    <input type="text" name="director" id="director" class="w-full">
+                                                                </div>
+                                                                <div class="mt-4 ">
+                                                                    <label for="duration" class="text-white">duration</label>
+                                                                    <input type="text" name="duration" id="duration" class="w-full">
+                                                                </div>
+                                                                <div class="mt-4 ">
+                                                                    <select name="genre_id">
+                                                                        <option selected disabled value="">select genre</option>
+                                                                        @forEach($genres as $genre)
+                                                                    
+                                                                        <option value="{{$genre->id}}">{{$genre->name}}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+                                                                <div class="mt-4">                                                                   
+                                                                        
+                                                                        @foreach($rooms as $room)
+                                                                        <label for="roomDate" class="text-white">date</label>
+                                                                        <input type="date" name="roomDate" id="roomDate" class="w-1/2">
+                                                                        <label for="room" class="text-white">{{$room->name}}</label>
+                                                                        <input type="checkbox" name="room" value="{{$room->id}}">
+                                                                        @endforeach
+                                                                    
+                                                                </div>
+                                                                <div class="mt-4">
+                                                                    <x-input name="image" id="image" type="file" class="p-4c w-full" :value="old('image')" required autofocus autocomplete="image"/>
+                                                                    <x-error field="iamge" class="text-red-500" :messages="$errors->get('image')" />
+
+                                                                </div>
+                                                                <div class=" pt-4 border-t border-gray-200 rounded-b dark:border-gray-600">
+                                                                    <button data-modal-hide="default-modal" type="submit" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add</button>
+                                                                </div>
+
+                                                            </x-form>
+                                                                </div>
+                                                                <!-- Modal footer -->
+                                                                <div class="flex items-center p-2  border-t border-gray-200 rounded-b dark:border-gray-600">
+                                                                    <button data-modal-hide="default-modal" type="button" class="ms-3 text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Decline</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <form method="POST" action="{{ route('film.destroy', $film)}}">
+                                                    @method('DELETE')
+                                                    @csrf
+                                                    <button type="submit" class="mt-4  bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full">delete</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
             <h1 class="text-5xl font-bold text-center text-red-700 mb-6" style="font-size: 60px; margin: 20px;">Manage Rooms</h1>
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
 

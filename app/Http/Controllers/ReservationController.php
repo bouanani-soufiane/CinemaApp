@@ -2,64 +2,56 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\SeatBookedEvent;
+use App\Http\Requests\ReservationRequest;
+use App\Mail\ReservationMail;
 use App\Models\Reservation;
+use App\Models\Seat;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Auth;
+
 
 class ReservationController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function store(ReservationRequest $request)
     {
-        //
+        $seats = $request['seat_id'];
+        $user = auth()->user();
+        $reservationInfo = [];
+
+        // Create a reservation for each selected seat
+        foreach ($seats as $seatId) {
+            $reservation = Reservation::create([
+                'user_id' => $request['user_id'],
+                'film_id' => $request['film_id'],
+                'showingTime' => $request['showingTime'],
+                'room_name' => $request['room_name'],
+                'seat_id' => $seatId,
+            ]);
+
+            $filmName = $reservation->film->name;
+            $zoneName = $reservation->seat->zone->name;
+            $roomName = $reservation->room_name;
+
+            $reservationInfo[] = [
+                'reservation' => $reservation,
+                'film_name' => $filmName,
+                'zone_name' => $zoneName,
+                'salleName' => $roomName,
+                'showingTime' => $reservation->showingTime,
+                'seat_id' => $reservation->seat_id
+            ];
+
+            SeatBookedEvent::dispatch($reservation);
+        }
+
+        $subject = 'Your reservation is here';
+        $body = 'Enjoy your watching';
+        Mail::to($user->email)->send(new ReservationMail($subject, $body, $reservationInfo));
+
+        return redirect()->back();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Reservation $reservation)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Reservation $reservation)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Reservation $reservation)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Reservation $reservation)
-    {
-        //
-    }
 }
