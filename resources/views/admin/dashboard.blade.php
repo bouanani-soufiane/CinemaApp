@@ -118,7 +118,7 @@
                     </div>
                     <div class="border-t border-blue-gray-50 p-4">
                         <p class="block antialiased font-sans text-base leading-relaxed font-normal text-blue-gray-600">
-                            <strong class="text-green-500">{{ $mostReservedFilm->reservations_count }}</strong>&nbsp;reservations
+{{--                            <strong class="text-green-500">{{ $mostReservedFilm->reservations_count }}</strong>&nbsp;reservations--}}
                         </p>
                     </div>
                 </div>

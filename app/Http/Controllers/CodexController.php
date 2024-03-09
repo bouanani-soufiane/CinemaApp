@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\TestRequest;
-use App\Models\Notification;
+use App\Models\codex;
 use Illuminate\Http\Request;
 
-class NotificationController extends Controller
+class CodexController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,15 +26,15 @@ class NotificationController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(TestRequest $noura)
+    public function store(Request $request)
     {
-
+        //
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Notification $notification)
+    public function show(codex $codex)
     {
         //
     }
@@ -43,7 +42,7 @@ class NotificationController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Notification $notification)
+    public function edit(codex $codex)
     {
         //
     }
@@ -51,7 +50,7 @@ class NotificationController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Notification $notification)
+    public function update(Request $request, codex $codex)
     {
         //
     }
@@ -59,7 +58,7 @@ class NotificationController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Notification $notification)
+    public function destroy(codex $codex)
     {
         //
     }

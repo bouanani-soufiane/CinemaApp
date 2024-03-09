@@ -48,6 +48,8 @@ Route::get('/dashboard', function () {
 });;
 
 Route::resource('/genre', \App\Http\Controllers\GenreController::class);
+Route::resource('codex', \App\Http\Controllers\CodexController::class);
+
 
 
 Route::get('/gg', function () {
@@ -65,13 +67,13 @@ Route::get('/auth/google/callback', [poviderController::class, 'callbackgoogle']
 
 
 require __DIR__ . '/auth.php';
-Route::resource('/actor', \App\Http\Controllers\ActorController::class);
+
 Route::resource('/film', \App\Http\Controllers\FilmController::class);
 Route::resource('/notification', \App\Http\Controllers\NotificationController::class);
 Route::resource('/reservation', \App\Http\Controllers\ReservationController::class);
 Route::resource('/room', \App\Http\Controllers\RoomController::class);
 Route::resource('/seat', \App\Http\Controllers\SeatController::class);
-Route::resource('/ticket', \App\Http\Controllers\TicketController::class);
+
 Route::resource('/zone', \App\Http\Controllers\ZoneController::class);
 
 Route::get('/fetch', [\App\Http\Controllers\FetchFilmController::class, 'fetchApiMovie']);
